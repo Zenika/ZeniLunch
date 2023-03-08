@@ -11,7 +11,7 @@
         android:id="@+id/listItems"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="70dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Retrouve tous les reZtos proches de ton agence Zenika"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
