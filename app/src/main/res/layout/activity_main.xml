@@ -5,43 +5,47 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_dark"
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listItems"
+        android:id="@+id/recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="70dp"
-        android:background="#FFFFFF"
+        android:background="@color/white_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_view" />
 
     <TextView
-        android:id="@+id/desc"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Retrouve tous les reZtos proches de ton agence Zenika"
+        android:text="@string/description"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--
     <Button
-        android:id="@+id/button"
+        android:id="@+id/suggestion"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:backgroundTint="#d81f4e"
+        android:backgroundTint="@color/zenika_red"
         android:text="Suggestion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listItems" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview" />
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

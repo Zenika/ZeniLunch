@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="zenika_red">#d81f4e</color>
-    <color name="zenika_red_dark">#940126</color>
+    <color name="white_dark">#FFF1F1</color>
+    <color name="zenika_red">#dc204a</color>
+    <color name="zenika_red_dark">#C91048</color>
 </resources>
