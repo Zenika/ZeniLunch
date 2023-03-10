@@ -1,3 +1,5 @@
 package com.zenika.zenilunch
 
-class RestaurantUIModel(val name: String)
+import java.io.Serializable
+
+class RestaurantUIModel(val name: String, val type: String, val price: String, val latitude: Double, val longitude: Double): Serializable
