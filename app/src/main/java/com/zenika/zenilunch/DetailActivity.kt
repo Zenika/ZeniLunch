@@ -29,9 +29,15 @@ class DetailActivity : AppCompatActivity() {
         val name = findViewById<TextView>(R.id.name)
         val type = findViewById<TextView>(R.id.type)
         val price = findViewById<TextView>(R.id.price)
+        val option = findViewById<TextView>(R.id.option)
         name.text = restaurant.name
         type.text = restaurant.type
         price.text = restaurant.price
+
+        option.text = ""
+        if (restaurant.vegetarian && restaurant.vegan) {
+            option.text = "Options : Végétarien & Vegan"
+        } else if (restaurant.vegetarian) option.text = "Option : Végétarien"
     }
 
     override fun onSupportNavigateUp(): Boolean {

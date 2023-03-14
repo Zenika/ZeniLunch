@@ -44,5 +44,14 @@
             android:text="@string/price"
             android:textAlignment="center"
             android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option"
+            android:textAlignment="viewStart"
+            android:layout_margin="@dimen/button_padding"
+            android:textSize="@dimen/small_text_size" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
