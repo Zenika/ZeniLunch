@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 class RestaurantUIModel(
     val name: String,
     val type: String,
-    val price: String
+    val price: String,
+    val vegetarian: Boolean,
+    val vegan: Boolean
 ) : Parcelable

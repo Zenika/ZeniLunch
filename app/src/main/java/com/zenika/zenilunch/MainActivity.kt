@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun createRestaurants(): List<RestaurantUIModel> {
         return listOf(
-            RestaurantUIModel("Kaffee Berlin", "Burger", "€"),
-            RestaurantUIModel("Happy Feel", "Végétarien", "€"),
-            RestaurantUIModel("Chez Jules", "Boulangerie", "€"),
-            RestaurantUIModel("O Pad Thaï", "Thaïlandais", "€"),
-            RestaurantUIModel("Jojo Pizza", "Pizzeria", "€")
+            RestaurantUIModel("Kaffee Berlin", "Burger", "€", vegetarian = false, vegan = false),
+            RestaurantUIModel("Happy Feel", "Végétarien", "€", vegetarian = true, vegan = true),
+            RestaurantUIModel("Chez Jules", "Boulangerie", "€", vegetarian = false, vegan = false),
+            RestaurantUIModel("O Pad Thaï", "Thaïlandais", "€", vegetarian = false, vegan = false),
+            RestaurantUIModel("Jojo Pizza", "Pizzeria", "€", vegetarian = true, vegan = false)
         )
     }
 }
