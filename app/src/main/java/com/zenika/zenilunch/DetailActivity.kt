@@ -1,5 +1,7 @@
 package com.zenika.zenilunch
 
+import android.content.Intent
+import android.net.Uri
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +24,10 @@ class DetailActivity : AppCompatActivity() {
 
         intent.extras
             ?.getParcelable<RestaurantUIModel>("restaurant")
-            ?.let { restaurant -> displayDetails(restaurant) }
+            ?.let { restaurant ->
+                displayDetails(restaurant)
+                getAddress(restaurant)
+            }
             ?: error("This activity requires a restaurant!")
     }
 
@@ -39,6 +44,20 @@ class DetailActivity : AppCompatActivity() {
             restaurant.vegan -> getString(R.string.option, getString(R.string.vegan))
             restaurant.vegetarian -> getString(R.string.option, getString(R.string.vegetarian))
             else -> getString(R.string.noOption)
+        }
+    }
+
+    private fun getAddress(restaurant: RestaurantUIModel) {
+        val address = findViewById<TextView>(R.id.map)
+        address?.setOnClickListener () {
+            val officeLatitude = 45.766752337134754
+            val officeLongitude = 4.858952442403011
+            val latitude = restaurant.latitude
+            val longitude = restaurant.longitude
+            val url = "http://maps.google.com/maps?saddr=$officeLatitude,$officeLongitude&daddr=$latitude,$longitude"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
         }
     }
 

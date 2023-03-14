@@ -52,4 +52,13 @@
         tools:text="@string/option"
         android:textAlignment="viewStart"
         android:textSize="@dimen/small_text_size" />
+
+    <Button
+        android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_padding"
+        android:backgroundTint="@color/primary_variant"
+        android:text="@string/map"
+        app:cornerRadius="@dimen/card_radius" />
 </LinearLayout>
