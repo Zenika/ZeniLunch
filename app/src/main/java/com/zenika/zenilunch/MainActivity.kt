@@ -1,7 +1,7 @@
 package com.zenika.zenilunch
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val adapter = RestaurantAdapter { restaurant ->
-            Toast.makeText(this, restaurant.name, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("restaurant", restaurant)
+            startActivity(intent)
         }
 
         findViewById<RecyclerView>(R.id.recyclerview).apply {
