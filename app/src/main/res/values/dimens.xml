@@ -4,4 +4,7 @@
     <dimen name="button_text_size">20sp</dimen>
     <dimen name="button_padding">25dp</dimen>
     <dimen name="screen_padding">16dp</dimen>
+    <dimen name="title_text_size">34sp</dimen>
+    <dimen name="big_text_size">24sp</dimen>
+    <dimen name="small_text_size">20sp</dimen>
 </resources>

@@ -9,11 +9,10 @@
     <LinearLayout
         android:layout_width="414dp"
         android:layout_height="269dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="@dimen/screen_padding"
         android:orientation="vertical"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,23 +20,22 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="@dimen/screen_padding"
             android:background="@color/primary"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
             android:text="@string/name"
             android:textAlignment="center"
             android:textColor="@color/window_background"
-            android:textSize="34sp" />
+            android:textSize="@dimen/title_text_size" />
 
         <TextView
             android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="@string/type"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="@dimen/big_text_size" />
 
         <TextView
             android:id="@+id/price"
@@ -45,6 +43,6 @@
             android:layout_height="wrap_content"
             android:text="@string/price"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="@dimen/small_text_size" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
