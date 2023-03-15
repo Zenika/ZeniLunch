@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginVertical="@dimen/screen_padding"
-        android:backgroundTint="@color/primary_variant"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/map"
         android:textAlignment="center"
         app:cornerRadius="@dimen/card_radius" />
