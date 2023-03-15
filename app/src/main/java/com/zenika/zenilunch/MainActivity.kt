@@ -1,6 +1,5 @@
 package com.zenika.zenilunch
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,8 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val adapter = RestaurantAdapter { restaurant ->
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("restaurant", restaurant)
+            val intent = DetailActivity.getStartIntent(this, restaurant)
             startActivity(intent)
         }
 

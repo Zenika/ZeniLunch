@@ -1,10 +1,20 @@
 package com.zenika.zenilunch
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class DetailActivity : AppCompatActivity() {
+    companion object {
+        fun getStartIntent(context: Context, restaurant: RestaurantUIModel): Intent {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("restaurant", restaurant)
+            return intent
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_activity)
