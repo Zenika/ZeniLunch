@@ -35,14 +35,11 @@ class DetailActivity : AppCompatActivity() {
         type.text = restaurant.type
         price.text = restaurant.price
 
-        val optionValue = when {
-            !restaurant.vegetarian -> "Non végétarien"
-            restaurant.vegetarian && !restaurant.vegan-> "Végétarien"
-            restaurant.vegan -> "Végétarien et vegan"
-            else -> "Pas d'option"
+        option.text = when {
+            restaurant.vegan -> getString(R.string.option, getString(R.string.vegan))
+            restaurant.vegetarian -> getString(R.string.option, getString(R.string.vegetarian))
+            else -> getString(R.string.noOption)
         }
-
-        option.append(optionValue)
     }
 
     override fun onSupportNavigateUp(): Boolean {
