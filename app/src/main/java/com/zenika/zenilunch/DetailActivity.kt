@@ -22,13 +22,13 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val addressButton = findViewById<Button>(R.id.map)
-
         intent.extras
             ?.getParcelable<RestaurantUIModel>("restaurant")
             ?.let { restaurant ->
                 displayDetails(restaurant)
-                openGoogleMaps(addressButton, restaurant)
+                findViewById<Button>(R.id.map).setOnClickListener {
+                    openGoogleMaps(restaurant)
+                }
             }
             ?: error("This activity requires a restaurant!")
     }
@@ -49,18 +49,16 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun openGoogleMaps(addressButton: Button, restaurant: RestaurantUIModel) {
-        addressButton.setOnClickListener() {
-            val officeLatitude = 45.766752337134754
-            val officeLongitude = 4.858952442403011
-            val latitude = restaurant.latitude
-            val longitude = restaurant.longitude
-            val url =
-                "http://maps.google.com/maps?saddr=$officeLatitude,$officeLongitude&daddr=$latitude,$longitude"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            intent.setPackage("com.google.android.apps.maps")
-            startActivity(intent)
-        }
+    private fun openGoogleMaps(restaurant: RestaurantUIModel) {
+        val officeLatitude = 45.766752337134754
+        val officeLongitude = 4.858952442403011
+        val latitude = restaurant.latitude
+        val longitude = restaurant.longitude
+        val url =
+            "http://maps.google.com/maps?saddr=$officeLatitude,$officeLongitude&daddr=$latitude,$longitude"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
