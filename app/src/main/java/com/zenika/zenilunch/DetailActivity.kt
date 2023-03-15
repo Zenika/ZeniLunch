@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,11 +22,13 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val addressButton = findViewById<Button>(R.id.map)
+
         intent.extras
             ?.getParcelable<RestaurantUIModel>("restaurant")
             ?.let { restaurant ->
                 displayDetails(restaurant)
-                openGoogleMaps(restaurant)
+                openGoogleMaps(addressButton, restaurant)
             }
             ?: error("This activity requires a restaurant!")
     }
@@ -46,9 +49,8 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun openGoogleMaps(restaurant: RestaurantUIModel) {
-        val address = findViewById<TextView>(R.id.map)
-        address?.setOnClickListener() {
+    private fun openGoogleMaps(addressButton: Button, restaurant: RestaurantUIModel) {
+        addressButton.setOnClickListener() {
             val officeLatitude = 45.766752337134754
             val officeLongitude = 4.858952442403011
             val latitude = restaurant.latitude
