@@ -4,5 +4,8 @@
     <string name="name">Nom</string>
     <string name="type">Genre</string>
     <string name="price">Prix</string>
-    <string name="option">Options :\ </string>
+    <string name="option">Option : %s</string>
+    <string name="vegetarian">Végétarien</string>
+    <string name="vegan">Vegan</string>
+    <string name="noOption">Pas d\'option</string>
 </resources>
