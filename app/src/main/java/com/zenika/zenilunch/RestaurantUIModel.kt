@@ -9,5 +9,7 @@ class RestaurantUIModel(
     val type: String,
     val price: String,
     val vegetarian: Boolean,
-    val vegan: Boolean
+    val vegan: Boolean,
+    val latitude: Double,
+    val longitude: Double
 ) : Parcelable
