@@ -1,43 +1,55 @@
 package com.zenika.zenilunch
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 
-class DetailActivity : AppCompatActivity() {
+class DetailFragment : Fragment() {
     companion object {
-        fun getStartIntent(context: Context, restaurant: RestaurantUIModel): Intent {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("restaurant", restaurant)
+        fun getStartIntent(context: FragmentActivity?) : Intent {
+            val intent = Intent(context, DetailFragment::class.java)
             return intent
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_activity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    private lateinit var viewModel: DetailViewModel
 
-        intent.extras
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        /*intent.extras
             ?.getParcelable<RestaurantUIModel>("restaurant")
             ?.let { restaurant ->
                 displayDetails(restaurant)
-                findViewById<Button>(R.id.map).setOnClickListener {
+                view.findViewById<Button>(R.id.map).setOnClickListener {
                     openGoogleMaps(restaurant)
                 }
             }
             ?: error("This activity requires a restaurant!")
+
+         */
+        return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
     }
 
     private fun displayDetails(restaurant: RestaurantUIModel) {
-        val name = findViewById<TextView>(R.id.name)
-        val type = findViewById<TextView>(R.id.type)
-        val price = findViewById<TextView>(R.id.price)
-        val option = findViewById<TextView>(R.id.option)
+        val name = requireView().findViewById<TextView>(R.id.name)
+        val type = requireView().findViewById<TextView>(R.id.type)
+        val price = requireView().findViewById<TextView>(R.id.price)
+        val option = requireView().findViewById<TextView>(R.id.option)
         name.text = restaurant.name
         type.text = restaurant.type
         price.text = restaurant.price
@@ -59,10 +71,5 @@ class DetailActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.setPackage("com.google.android.apps.maps")
         startActivity(intent)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
     }
 }
