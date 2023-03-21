@@ -6,43 +6,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
-    companion object {
-        fun getStartIntent(context: FragmentActivity?) : Intent {
-            val intent = Intent(context, DetailFragment::class.java)
-            return intent
-        }
-    }
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_detail, container, false)
+        setFragmentResultListener("requestKey") { key, bundle ->
+            val restaurant = bundle.getParcelable<RestaurantUIModel>("restaurant")
+            if (restaurant != null) {
+                Toast.makeText(context, restaurant.name, Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    viewModel.setRestaurant(restaurant)
+                }
+            }
+        }
+        return view
+    }
 
-        /*intent.extras
-            ?.getParcelable<RestaurantUIModel>("restaurant")
-            ?.let { restaurant ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch {
+            viewModel.restaurant.collect { restaurant ->
                 displayDetails(restaurant)
-                view.findViewById<Button>(R.id.map).setOnClickListener {
+                val map = requireView().findViewById<Button>(R.id.map)
+                map.setOnClickListener() {
                     openGoogleMaps(restaurant)
                 }
             }
-            ?: error("This activity requires a restaurant!")
-
-         */
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun displayDetails(restaurant: RestaurantUIModel) {

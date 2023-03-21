@@ -8,7 +8,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/listfragment"
         android:name="com.zenika.zenilunch.ListFragment"
-        android:layout_width="387dp"
+        android:layout_width="378dp"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_list" />
 
