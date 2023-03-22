@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class DetailViewModel : ViewModel() {
-    private val _restaurant = MutableStateFlow(RestaurantUIModel("Kaffee Berlin", "Burger", "€", vegetarian = true, vegan = true, 45.767551889608235, 4.857335592897319))
+    private val _restaurant = MutableStateFlow(RestaurantUIModel("", "", "", vegetarian = false, vegan = false, 0.0, 0.0))
     var restaurant: StateFlow<RestaurantUIModel> = _restaurant.asStateFlow()
 
     fun setRestaurant(restaurant: RestaurantUIModel) {

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +22,7 @@ class ListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         adapter = RestaurantAdapter { restaurant ->
-            parentFragmentManager.commit {
-                replace(R.id.fragmentHolder, DetailFragment())
-                setFragmentResult("requestKey", bundleOf("restaurant" to restaurant))
-            }
+            (activity as? MainActivity)?.onRestaurantClick(restaurant)
         }
         view.findViewById<RecyclerView>(R.id.recyclerview).apply {
             this.layoutManager = LinearLayoutManager(context)

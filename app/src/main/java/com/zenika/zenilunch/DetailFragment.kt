@@ -9,13 +9,23 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
+
+    companion object {
+        fun newInstance(restaurant: RestaurantUIModel): Fragment {
+            return DetailFragment().apply {
+                arguments = bundleOf(
+                    "restaurant" to restaurant
+                )
+            }
+        }
+    }
 
     private val viewModel: DetailViewModel by viewModels()
 
@@ -24,14 +34,14 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        setFragmentResultListener("requestKey") { key, bundle ->
-            val restaurant = bundle.getParcelable<RestaurantUIModel>("restaurant")
-            if (restaurant != null) {
-                Toast.makeText(context, restaurant.name, Toast.LENGTH_SHORT).show()
-                lifecycleScope.launch {
-                    viewModel.setRestaurant(restaurant)
-                }
+        val restaurant = arguments?.getParcelable<RestaurantUIModel>("restaurant")
+
+        if (restaurant != null) {
+            lifecycleScope.launch {
+                viewModel.setRestaurant(restaurant)
             }
+        } else {
+            Toast.makeText(context, "Restaurant not found", Toast.LENGTH_SHORT).show()
         }
         return view
     }
