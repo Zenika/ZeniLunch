@@ -9,18 +9,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import dagger.hilt.android.AndroidEntryPoint
 
 var modifier = Modifier
     .fillMaxWidth()
     .padding(10.dp)
 
-@OptIn(ExperimentalAnimationApi::class)
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     fun MyAppNavHost(
         modifier: Modifier = Modifier,
@@ -48,9 +51,9 @@ class MainActivity : AppCompatActivity() {
             }
             composable("detail/{name}", arguments = listOf(navArgument("name") {
                 type = NavType.StringType
-            })) { backStackEntry ->
-                val name = backStackEntry.arguments?.getString("name")
-                DetailScreen()
+            })) {
+                val viewModel = hiltViewModel<DetailViewModel>()
+                DetailScreen(viewModel)
             }
         }
     }
