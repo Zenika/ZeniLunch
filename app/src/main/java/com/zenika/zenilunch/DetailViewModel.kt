@@ -10,10 +10,6 @@ class DetailViewModel(
 ): ViewModel() {
     private var restaurantName :String = savedStateHandle.get<String>("name") ?: error("Restaurant name is required!")
 
-    fun setRestaurantName(name: String) {
-        restaurantName = name
-    }
-
     fun getRestaurant(): RestaurantUIModel {
         val restaurants = listOf(
             RestaurantUIModel("Kaffee Berlin", "Burger", "€", vegetarian = true, vegan = true, 45.767551889608235, 4.857335592897319),
