@@ -31,7 +31,8 @@ class RestaurantViewModel(
             RestaurantUIModel("Ok Sushi", "Japonais", "€€", true, false, 45.76855096798334, 4.8494913730169795),
             RestaurantUIModel("Chikin Bang", "Coréen", "€", false, false, 45.761726612268745, 4.856067793275381),
             RestaurantUIModel("Manger Vite & Bien", "Bar à salades", "€", true, true, 45.764033379006165, 4.857152298222151),
-            RestaurantUIModel("Subway", "Sandwich", "€€", true, true, 45.76959922404694, 4.854517083590193)
+            RestaurantUIModel("Subway", "Sandwich", "€€", true, true, 45.76959922404694, 4.854517083590193),
+            RestaurantUIModel("Pepe Pizza", "Pizzeria", "€€", false, false, 45.76609019074048, 4.854910608843241)
         )
 
         var restaurantValues = RestaurantUIModel("Error", "", "", vegetarian = false, vegan = false, 0.0, 0.0)

@@ -12,11 +12,15 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,57 +35,71 @@ fun ListScreen(
 ) {
     val restaurants = createRestaurants()
     val state = rememberLazyListState()
-    Column {
-        TopAppBar(title = { Text(text = "ZeniLunch") })
-        Text(
-            text = "Retrouve tous les reZtos proches de ton agence Zenika",
-            Modifier
-                .padding(12.dp),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Button(
-            onClick = {
-                val randomIndex = Random.nextInt(restaurants.size)
-                val restaurant = restaurants[randomIndex]
-                onSuggestionClick(restaurant) },
-            Modifier
-                .align(CenterHorizontally)
-        ) {
-            Text(
-                text = "Suggestion",
-                fontSize = 20.sp
-            )
-        }
-        LazyColumn(
-            Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = CenterHorizontally,
-            contentPadding = PaddingValues(screenPadding),
-            state = state
-        ) {
-            items(restaurants.size) { index ->
-                val restaurant = restaurants[index]
-                val restaurantName = restaurant.name
-                Card(
+
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "ZeniLunch") })
+        },
+        content = { innerPadding ->
+            Column(
+                Modifier
+                    .padding(innerPadding)
+            ) {
+                Text(
+                    text = stringResource(R.string.description),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                LazyColumn(
                     Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            onRestaurantClick(restaurant)
-                        }
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = CenterHorizontally,
+                    contentPadding = PaddingValues(
+                        screenPadding,
+                        screenPadding,
+                        screenPadding,
+                        70.dp
+                    ),
+                    state = state
                 ) {
-                    Text(
-                        text = restaurantName, Modifier
-                            .padding(24.dp)
-                            .fillMaxSize(),
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
-                    )
+                    items(restaurants.size) { index ->
+                        val restaurant = restaurants[index]
+                        val restaurantName = restaurant.name
+                        Card(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    onRestaurantClick(restaurant)
+                                }
+                        ) {
+                            Text(
+                                text = restaurantName, Modifier
+                                    .padding(24.dp)
+                                    .fillMaxSize(),
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButton = {
+            Button(
+                onClick = {
+                    val randomIndex = Random.nextInt(restaurants.size)
+                    val restaurant = restaurants[randomIndex]
+                    onSuggestionClick(restaurant)
+                }) {
+                Text(
+                    text = stringResource(R.string.suggestion),
+                    fontSize = 20.sp
+                )
+            }
         }
-    }
+    )
 }
 
 private fun createRestaurants(): List<RestaurantUIModel> {
@@ -94,6 +112,7 @@ private fun createRestaurants(): List<RestaurantUIModel> {
         RestaurantUIModel("Ok Sushi", "Japonais", "€€", true, false, 45.76855096798334, 4.8494913730169795),
         RestaurantUIModel("Chikin Bang", "Coréen", "€", false, false, 45.761726612268745, 4.856067793275381),
         RestaurantUIModel("Manger Vite & Bien", "Bar à salades", "€", true, true, 45.764033379006165, 4.857152298222151),
-        RestaurantUIModel("Subway", "Sandwich", "€€", true, true, 45.76959922404694, 4.854517083590193)
+        RestaurantUIModel("Subway", "Sandwich", "€€", true, true, 45.76959922404694, 4.854517083590193),
+        RestaurantUIModel("Pepe Pizza", "Pizzeria", "€€", false, false, 45.76609019074048, 4.854910608843241)
     )
 }
