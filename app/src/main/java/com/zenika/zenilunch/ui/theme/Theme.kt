@@ -68,9 +68,10 @@ fun ZeniLunchTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+        typography = Typography
+    ) {
+        Surface(content = content)
+    }
 }
 
 @Composable
