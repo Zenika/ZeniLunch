@@ -37,7 +37,7 @@ fun ListScreen(
     onRestaurantClick: (restaurant: RestaurantUIModel) -> Unit,
     onSuggestionClick: (restaurant: RestaurantUIModel) -> Unit
 ) {
-    val restaurants = createRestaurants()
+    val restaurants = getRestaurants()
     val state = rememberLazyListState()
 
     Scaffold(
@@ -109,100 +109,5 @@ fun ListScreen(
                 }
             }
         }
-    )
-}
-
-private fun createRestaurants(): List<RestaurantUIModel> {
-    return listOf(
-        RestaurantUIModel(
-            "Kaffee Berlin",
-            "Burger",
-            "€€",
-            vegetarian = true,
-            vegan = true,
-            45.767551889608235,
-            4.857335592897319
-        ),
-        RestaurantUIModel(
-            "Happy Feel",
-            "Végétarien",
-            "€€",
-            vegetarian = true,
-            vegan = true,
-            45.76864100678723,
-            4.8619654828776016
-        ),
-        RestaurantUIModel(
-            "Chez Jules",
-            "Boulangerie",
-            "€",
-            vegetarian = false,
-            vegan = false,
-            45.76648502742043,
-            4.856709398222179
-        ),
-        RestaurantUIModel(
-            "O Pad Thaï",
-            "Thaïlandais",
-            "€€",
-            vegetarian = false,
-            vegan = false,
-            45.76399480415859,
-            4.856358936709006
-        ),
-        RestaurantUIModel(
-            "Jojo Pizza",
-            "Pizzeria",
-            "€",
-            vegetarian = true,
-            vegan = false,
-            45.77004280935307,
-            4.858317698222286
-        ),
-        RestaurantUIModel(
-            "Ok Sushi",
-            "Japonais",
-            "€€",
-            true,
-            false,
-            45.76855096798334,
-            4.8494913730169795
-        ),
-        RestaurantUIModel(
-            "Chikin Bang",
-            "Coréen",
-            "€",
-            false,
-            false,
-            45.761726612268745,
-            4.856067793275381
-        ),
-        RestaurantUIModel(
-            "Manger Vite & Bien",
-            "Bar à salades",
-            "€",
-            true,
-            true,
-            45.764033379006165,
-            4.857152298222151
-        ),
-        RestaurantUIModel(
-            "Subway",
-            "Sandwich",
-            "€€",
-            true,
-            true,
-            45.76959922404694,
-            4.854517083590193
-        ),
-        RestaurantUIModel(
-            "Pepe Pizza",
-            "Pizzeria",
-            "€€",
-            false,
-            false,
-            45.76609019074048,
-            4.854910608843241
-        )
     )
 }

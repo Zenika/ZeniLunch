@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class RestaurantUIModel(
+data class RestaurantUIModel(
     val name: String,
     val type: String,
     val price: String,
