@@ -1,0 +1,14 @@
+{
+  "restaurants": [
+    {"name":"Kaffee Berlin", "type":"Burger", "price":"€€", "vegetarian":true, "vegan":true, "latitude":45.767551889608235, "longitude":4.857335592897319},
+    {"name":"Happy Feel", "type":"Végétarien", "price":"€€", "vegetarian":true, "vegan":true, "latitude":45.76864100678723, "longitude":4.8619654828776016},
+    {"name":"Chez Jules", "type":"Boulangerie", "price":"€", "vegetarian":false, "vegan":false, "latitude":45.76648502742043, "longitude":4.856709398222179},
+    {"name":"O Pad Thaï", "type":"Thaïlandais", "price":"€€", "vegetarian":false, "vegan":false, "latitude":45.76399480415859, "longitude":4.856358936709006},
+    {"name":"Jojo", "type":"Pizzeria", "price":"€", "vegetarian":true, "vegan":false, "latitude":45.77004280935307, "longitude":4.858317698222286},
+    {"name":"Ok sushi", "type":"Japonais", "price":"€€", "vegetarian":true, "vegan":false, "latitude":45.76855096798334, "longitude":4.8494913730169795},
+    {"name":"Chikin Bang", "type":"Coréen", "price":"€", "vegetarian":false, "vegan":false, "latitude":45.761726612268745, "longitude":4.856067793275381},
+    {"name":"Manger Vite & Bien", "type":"Bar à salades", "price":"€", "vegetarian":true, "vegan":true, "latitude":45.764033379006165, "longitude":4.857152298222151},
+    {"name":"Subway", "type":"Sandwich", "price":"€€", "vegetarian":true, "vegan":true, "latitude":45.76959922404694, "longitude":4.854517083590193},
+    {"name":"Pepe Pizza", "type":"Pizzeria", "price":"€€", "vegetarian":false, "vegan":false, "latitude":45.76609019074048, "longitude":4.854910608843241}
+  ]
+}
