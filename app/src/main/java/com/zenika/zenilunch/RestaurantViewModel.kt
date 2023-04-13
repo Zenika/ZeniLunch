@@ -35,13 +35,6 @@ class RestaurantViewModel(
             RestaurantUIModel("Pepe Pizza", "Pizzeria", "€€", false, false, 45.76609019074048, 4.854910608843241)
         )
 
-        var restaurantValues = RestaurantUIModel("Error", "", "", vegetarian = false, vegan = false, 0.0, 0.0)
-        for (restaurant in restaurants) {
-            if (restaurant.name == restaurantName) {
-                restaurantValues = restaurant
-                break
-            }
-        }
-        return restaurantValues
+        return restaurants.find { restaurant -> restaurant.name == restaurantName }!!
     }
 }
