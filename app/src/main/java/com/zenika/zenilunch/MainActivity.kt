@@ -5,6 +5,8 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -40,11 +42,11 @@ class MainActivity : AppCompatActivity() {
             startDestination = startDestination
         ) {
             composable("list") {
-                ListScreen(onRestaurantClick = { restaurant ->
+                ListScreen(goToDetailScreen = { restaurant ->
                     val name = restaurant.name
                     navController.navigate("detail/$name")
                 },
-                    onSuggestionClick = { restaurant ->
+                    openSuggestionDialog = { restaurant ->
                         val name = restaurant.name
                         navController.navigate("suggestion/$name")
                     }
@@ -58,7 +60,10 @@ class MainActivity : AppCompatActivity() {
             dialog("suggestion/{name}", arguments = listOf(navArgument("name") {
                 type = NavType.StringType
             })) {
-                SuggestionDialog()
+                val openDialog = remember { mutableStateOf(true) }
+                if (openDialog.value) {
+                    SuggestionDialog(openDialog)
+                }
             }
         }
     }
