@@ -6,11 +6,15 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -19,11 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 
@@ -33,7 +37,8 @@ fun DetailScreen(
 ) {
     val restaurant by viewModel.restaurant.collectAsState()
     Restaurant(
-        restaurant, Modifier
+        restaurant,
+        Modifier
             .fillMaxSize()
     )
 }
@@ -53,46 +58,59 @@ private fun Restaurant(
         )
         else -> stringResource(R.string.noOption)
     }
-    Column(
-        modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        TopAppBar(title = { Text(text = "ZeniLunch") })
-        Text(
-            text = restaurant.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primary),
-            textAlign = TextAlign.Center,
-            fontSize = 24.sp,
-            color = MaterialTheme.colorScheme.onPrimary
-        )
-        Text(
-            text = restaurant.type,
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Text(
-            text = restaurant.price,
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Text(
-            text = option,
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            fontSize = 18.sp
-        )
-        Button(onClick = { context.openGoogleMaps(restaurant) }) {
-            Text(text = stringResource(R.string.map))
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) })
+        },
+        content = { innerPadding ->
+            Column(
+                modifier
+                    .padding(
+                        top = innerPadding.calculateTopPadding(),
+                        start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
+                        end = innerPadding.calculateEndPadding(LocalLayoutDirection.current)
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = restaurant.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = MaterialTheme.colorScheme.primary),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Text(
+                    text = restaurant.type,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = restaurant.price,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = option,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Button(onClick = { context.openGoogleMaps(restaurant) }) {
+                    Text(text = stringResource(R.string.map),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+            }
         }
-    }
+    )
 }
 
 fun Context.openGoogleMaps(restaurant: RestaurantUIModel) {
