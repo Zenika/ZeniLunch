@@ -1,36 +1,67 @@
 package com.zenika.zenilunch
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.dialog
+import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.zenika.zenilunch.ui.theme.ZeniLunchTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val adapter = RestaurantAdapter { restaurant ->
-            val intent = DetailActivity.getStartIntent(this, restaurant)
-            startActivity(intent)
+        setContent {
+            ZeniLunchTheme {
+                MyAppNavHost()
+            }
         }
-
-        findViewById<RecyclerView>(R.id.recyclerview).apply {
-            this.layoutManager = LinearLayoutManager(this@MainActivity)
-            this.adapter = adapter
-        }
-
-        val restaurants = createRestaurants()
-        adapter.submitList(restaurants)
     }
 
-    private fun createRestaurants(): List<RestaurantUIModel> {
-        return listOf(
-            RestaurantUIModel("Kaffee Berlin", "Burger", "€", vegetarian = true, vegan = true, 45.767551889608235, 4.857335592897319),
-            RestaurantUIModel("Happy Feel", "Végétarien", "€", vegetarian = true, vegan = true, 45.76864100678723, 4.8619654828776016),
-            RestaurantUIModel("Chez Jules", "Boulangerie", "€", vegetarian = false, vegan = false, 45.76648502742043, 4.856709398222179),
-            RestaurantUIModel("O Pad Thaï", "Thaïlandais", "€", vegetarian = false, vegan = false, 45.76399480415859, 4.856358936709006),
-            RestaurantUIModel("Jojo Pizza", "Pizzeria", "€", vegetarian = true, vegan = false, 45.77004280935307, 4.858317698222286)
-        )
+    @OptIn(ExperimentalAnimationApi::class)
+    @Composable
+    fun MyAppNavHost(
+        modifier: Modifier = Modifier,
+        navController: NavHostController = rememberAnimatedNavController(),
+        startDestination: String = "list"
+    ) {
+        AnimatedNavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            composable("list") {
+                ListScreen(goToDetailScreen = { restaurant ->
+                    val name = restaurant.name
+                    navController.navigate("detail/$name")
+                },
+                    openSuggestionDialog = { restaurant ->
+                        val name = restaurant.name
+                        navController.navigate("suggestion/$name")
+                    }
+                )
+            }
+            composable("detail/{name}", arguments = listOf(navArgument("name") {
+                type = NavType.StringType
+            })) {
+                DetailScreen()
+            }
+            dialog("suggestion/{name}", arguments = listOf(navArgument("name") {
+                type = NavType.StringType
+            })) {
+                SuggestionDialog(
+                    onDismissRequest = { navController.popBackStack() }
+                )
+            }
+        }
     }
 }
