@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import com.zenika.zenilunch.ui.theme.cardPadding
 
@@ -17,7 +18,8 @@ fun RestaurantCard(goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit, re
     Card(
         Modifier
             .fillMaxWidth()
-            .clickable {
+            .semantics(mergeDescendants = true) {}
+            .clickable(onClickLabel = "Ouvrir le détails") {
                 goToDetailScreen(restaurant)
             }
     ) {

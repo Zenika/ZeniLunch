@@ -82,8 +82,7 @@ fun ListScreen(
                         .align(BottomCenter)
                         .padding(screenPadding),
                     onClick = {
-                        val randomIndex = Random.nextInt(restaurants.size)
-                        val restaurant = restaurants[randomIndex]
+                        val restaurant = restaurants.random()
                         openSuggestionDialog(restaurant)
                     }) {
                     Text(

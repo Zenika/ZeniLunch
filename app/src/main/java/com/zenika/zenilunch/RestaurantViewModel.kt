@@ -35,6 +35,6 @@ class RestaurantViewModel(
             RestaurantUIModel("Pepe Pizza", "Pizzeria", "€€", false, false, 45.76609019074048, 4.854910608843241)
         )
 
-        return restaurants.find { restaurant -> restaurant.name == restaurantName }!!
+        return restaurants.first { restaurant -> restaurant.name == restaurantName }
     }
 }

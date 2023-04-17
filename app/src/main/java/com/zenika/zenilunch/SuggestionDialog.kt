@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -15,38 +14,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.zenika.zenilunch.ui.theme.dialogPadding
 import com.zenika.zenilunch.ui.theme.screenPadding
 
 @Composable
 fun SuggestionDialog(
-    openDialog: MutableState<Boolean>,
-    viewModel: RestaurantViewModel = hiltViewModel()
+    viewModel: RestaurantViewModel = hiltViewModel(),
+    onDismissRequest: () -> Unit
 ) {
     val restaurant by viewModel.restaurant.collectAsState()
     Dialog(
-        onDismissRequest = { openDialog.value = false },
+        onDismissRequest = onDismissRequest,
         properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
     ) {
-        Column(
+        SuggestionContent(
+            restaurant,
             Modifier
                 .fillMaxWidth()
-                .padding(screenPadding)
+                .padding(dialogPadding)
                 .background(
                     MaterialTheme.colorScheme.inversePrimary,
                     MaterialTheme.shapes.extraLarge
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = restaurant.name,
-                Modifier.padding(screenPadding),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = restaurant.type,
-                Modifier.padding(screenPadding),
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
+                )
+        )
+    }
+}
+
+@Composable
+private fun SuggestionContent(
+    restaurant: RestaurantUIModel,
+    modifier: Modifier
+) {
+    Column(
+        modifier
+            .padding(screenPadding),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = restaurant.name,
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(
+            text = restaurant.type,
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
