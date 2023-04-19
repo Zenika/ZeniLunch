@@ -3,6 +3,7 @@ package com.zenika.zenilunch.detail
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,11 +37,14 @@ import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 
 @Composable
 fun DetailScreen(
+    popBack: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val restaurant by viewModel.restaurant.collectAsState()
     Restaurant(
         restaurant,
+        popBack,
+        viewModel::hideRestaurant,
         Modifier
             .fillMaxSize()
     )
@@ -49,6 +54,8 @@ fun DetailScreen(
 @Composable
 private fun Restaurant(
     restaurant: RestaurantUIModel,
+    popBack: () -> Unit,
+    hideRestaurant: () -> Unit,
     modifier: Modifier
 ) {
     val context = LocalContext.current
@@ -58,62 +65,76 @@ private fun Restaurant(
             R.string.option,
             stringResource(R.string.vegetarian)
         )
+
         else -> stringResource(R.string.noOption)
     }
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) })
-        },
-        content = { innerPadding ->
-            Column(
-                modifier
-                    .padding(
-                        top = innerPadding.calculateTopPadding(),
-                        start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                        end = innerPadding.calculateEndPadding(LocalLayoutDirection.current)
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+        }
+    ) { innerPadding ->
+        Column(
+            modifier
+                .padding(
+                    top = innerPadding.calculateTopPadding(),
+                    start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
+                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current)
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = restaurant.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colorScheme.primary),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+            Text(
+                text = restaurant.type,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = restaurant.price,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = option,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Button(onClick = { context.openGoogleMaps(restaurant) }) {
+                Text(
+                    text = stringResource(R.string.map),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Button(
+                onClick = {
+                    hideRestaurant()
+                    popBack()
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
             ) {
                 Text(
-                    text = restaurant.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primary),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onPrimary
+                    text = stringResource(R.string.hide),
+                    style = MaterialTheme.typography.bodyMedium
                 )
-                Text(
-                    text = restaurant.type,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(
-                    text = restaurant.price,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(
-                    text = option,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Button(onClick = { context.openGoogleMaps(restaurant) }) {
-                    Text(
-                        text = stringResource(R.string.map),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
             }
         }
-    )
+    }
 }
 
 fun Context.openGoogleMaps(restaurant: RestaurantUIModel) {
@@ -143,6 +164,8 @@ fun FullVeganPreview() {
                 latitude = 1.0,
                 longitude = 2.0
             ),
+            popBack = { Log.d("preview", "Restaurant caché") },
+            hiltViewModel(),
             Modifier
         )
     }
@@ -162,6 +185,8 @@ fun FullMeatPreview() {
                 latitude = 1.0,
                 longitude = 2.0
             ),
+            popBack = { Log.d("preview", "Restaurant caché") },
+            hiltViewModel(),
             Modifier
         )
     }

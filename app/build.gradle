@@ -17,8 +17,8 @@ android {
         applicationId "com.zenika.zenilunch"
         minSdk 21
         targetSdk 33
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,7 +41,15 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.2"
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+}
 
+ksp {
+    arg('room.schemaLocation', "$projectDir/schemas")
 }
 
 dependencies {
@@ -81,4 +89,19 @@ dependencies {
 
     implementation "com.squareup.moshi:moshi:1.14.0"
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
+
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    def mockkVersion = "1.13.5"
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation platform("androidx.compose:compose-bom:2022.10.00")
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
 }

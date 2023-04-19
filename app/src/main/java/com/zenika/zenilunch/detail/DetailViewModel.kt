@@ -4,18 +4,21 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.domain.GetRestaurantByNameUseCase
+import com.zenika.zenilunch.domain.HideRestaurantUseCase
 import com.zenika.zenilunch.mapper.convertRestaurantObject
-import com.zenika.zenilunch.repository.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val restaurantRepository: RestaurantRepository,
+    private val getRestaurantByName: GetRestaurantByNameUseCase,
+    private val hideRestaurant: HideRestaurantUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private var restaurantName: String =
@@ -31,9 +34,14 @@ class DetailViewModel @Inject constructor(
     )
 
     private suspend fun getRestaurant(): RestaurantUIModel {
-        val restaurants = restaurantRepository.getRestaurants()
-        val restaurant = restaurants.first { restaurant -> restaurant.name == restaurantName }
+        val restaurant = getRestaurantByName(restaurantName)
         return restaurant.convertRestaurantObject()
+    }
+
+    fun hideRestaurant() {
+        viewModelScope.launch {
+            hideRestaurant(restaurantName)
+        }
     }
 }
 
