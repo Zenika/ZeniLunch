@@ -35,9 +35,13 @@ import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 
+const val OFFICE_LATITUDE = 45.766752337134754
+const val OFFICE_LONGITUDE = 4.858952442403011
+
 @Composable
 fun DetailScreen(
     popBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val restaurant by viewModel.restaurant.collectAsState()
@@ -45,7 +49,7 @@ fun DetailScreen(
         restaurant,
         popBack,
         viewModel::hideRestaurant,
-        Modifier
+        modifier
             .fillMaxSize()
     )
 }
@@ -56,18 +60,9 @@ private fun Restaurant(
     restaurant: RestaurantUIModel,
     popBack: () -> Unit,
     hideRestaurant: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val option = when {
-        restaurant.vegan -> stringResource(R.string.option, stringResource(R.string.vegan))
-        restaurant.vegetarian -> stringResource(
-            R.string.option,
-            stringResource(R.string.vegetarian)
-        )
-
-        else -> stringResource(R.string.noOption)
-    }
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) })
@@ -94,56 +89,75 @@ private fun Restaurant(
             )
             Text(
                 text = restaurant.type,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = restaurant.price,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = option,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                text = extractOptions(restaurant),
+                style = MaterialTheme.typography.bodyLarge
             )
-            Button(onClick = { context.openGoogleMaps(restaurant) }) {
-                Text(
-                    text = stringResource(R.string.map),
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
-            Button(
+            OpenGoogleMapsButton(onClick = { context.openGoogleMaps(restaurant) })
+            HideRestaurantButton(
                 onClick = {
                     hideRestaurant()
                     popBack()
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.hide),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+                }
+            )
         }
     }
 }
 
+@Composable
+private fun OpenGoogleMapsButton(
+    onClick: () -> Unit
+) {
+    Button(onClick = onClick) {
+        Text(
+            text = stringResource(R.string.map),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Composable
+private fun HideRestaurantButton(
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.error
+        )
+    ) {
+        Text(
+            text = stringResource(R.string.hide),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+private fun extractOptions(restaurant: RestaurantUIModel): String {
+    val option = when {
+        restaurant.vegan -> stringResource(R.string.option, stringResource(R.string.vegan))
+        restaurant.vegetarian -> stringResource(
+            R.string.option,
+            stringResource(R.string.vegetarian)
+        )
+
+        else -> stringResource(R.string.noOption)
+    }
+    return option
+}
+
 fun Context.openGoogleMaps(restaurant: RestaurantUIModel) {
-    val officeLatitude = 45.766752337134754
-    val officeLongitude = 4.858952442403011
     val latitude = restaurant.latitude
     val longitude = restaurant.longitude
     val url =
-        "http://maps.google.com/maps?saddr=$officeLatitude,$officeLongitude&daddr=$latitude,$longitude"
+        "http://maps.google.com/maps?saddr=$OFFICE_LATITUDE,$OFFICE_LONGITUDE&daddr=$latitude,$longitude"
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     intent.setPackage("com.google.android.apps.maps")
 
@@ -165,7 +179,7 @@ fun FullVeganPreview() {
                 longitude = 2.0
             ),
             popBack = { Log.d("preview", "Restaurant caché") },
-            hiltViewModel(),
+            hideRestaurant = {},
             Modifier
         )
     }
@@ -186,7 +200,7 @@ fun FullMeatPreview() {
                 longitude = 2.0
             ),
             popBack = { Log.d("preview", "Restaurant caché") },
-            hiltViewModel(),
+            hideRestaurant = {},
             Modifier
         )
     }

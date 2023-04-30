@@ -41,6 +41,7 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+@Suppress("ModifierMissing")
 @Composable
 fun ZeniLunchTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -74,6 +75,7 @@ fun ZeniLunchTheme(
     }
 }
 
+@Suppress("ModifierMissing")
 @Composable
 fun PreviewZeniLunchTheme(content: @Composable () -> Unit) {
     ZeniLunchTheme {
