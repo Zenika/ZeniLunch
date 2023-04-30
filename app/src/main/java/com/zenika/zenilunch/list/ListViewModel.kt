@@ -9,6 +9,9 @@ import com.zenika.zenilunch.mapper.convertRestaurantObject
 import com.zenika.zenilunch.network.RestaurantDto
 import com.zenika.zenilunch.repository.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,12 +26,12 @@ class ListViewModel @Inject constructor(
     private val restaurantRepository: RestaurantRepository
 ) : ViewModel() {
 
-    private val _restaurants = MutableStateFlow(listOf<RestaurantUIModel>())
-    val restaurants: StateFlow<List<RestaurantUIModel>> = _restaurants
+    private val _restaurants = MutableStateFlow<ImmutableList<RestaurantUIModel>>(persistentListOf())
+    val restaurants: StateFlow<ImmutableList<RestaurantUIModel>> = _restaurants
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-            initialValue = listOf(
+            initialValue = persistentListOf(
                 RestaurantUIModel(
                     "",
                     "",
@@ -44,7 +47,7 @@ class ListViewModel @Inject constructor(
     fun init() {
         viewModelScope.launch {
             val newRestaurants = getRestaurants()
-            _restaurants.update { newRestaurants }
+            _restaurants.update { newRestaurants.toImmutableList() }
         }
     }
 

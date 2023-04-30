@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.screenPadding
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +96,7 @@ fun ListScreen(
 
 @Composable
 private fun SuggestionButton(
-    restaurants: List<RestaurantUIModel>,
+    restaurants: ImmutableList<RestaurantUIModel>,
     openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit
 ) {
     Box(Modifier.fillMaxWidth()) {
