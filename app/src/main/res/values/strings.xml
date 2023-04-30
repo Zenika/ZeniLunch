@@ -10,4 +10,5 @@
     <string name="noOption">Pas d\'option</string>
     <string name="map">Ouvrir Google Maps</string>
     <string name="suggestion">Suggestion</string>
+    <string name="hide">Cacher ce restaurant</string>
 </resources>

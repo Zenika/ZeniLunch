@@ -42,25 +42,36 @@ class MainActivity : AppCompatActivity() {
             navController = navController,
             startDestination = startDestination
         ) {
-            composable("list") {
-                ListScreen(goToDetailScreen = { restaurant ->
-                    val name = restaurant.name
-                    navController.navigate("detail/$name")
-                },
+            composable(
+                route = "list"
+            ) {
+                ListScreen(
+                    goToDetailScreen = { restaurant ->
+                        val name = restaurant.name
+                        navController.navigate("detail/$name")
+                    },
                     openSuggestionDialog = { restaurant ->
                         val name = restaurant.name
                         navController.navigate("suggestion/$name")
                     }
                 )
             }
-            composable("detail/{name}", arguments = listOf(navArgument("name") {
-                type = NavType.StringType
-            })) {
-                DetailScreen()
+            composable(
+                route = "detail/{name}",
+                arguments = listOf(navArgument("name") {
+                    type = NavType.StringType
+                })
+            ) {
+                DetailScreen(
+                    popBack = { navController.popBackStack() }
+                )
             }
-            dialog("suggestion/{name}", arguments = listOf(navArgument("name") {
-                type = NavType.StringType
-            })) {
+            dialog(
+                route = "suggestion/{name}",
+                arguments = listOf(navArgument("name") {
+                    type = NavType.StringType
+                })
+            ) {
                 SuggestionDialog(
                     onDismissRequest = { navController.popBackStack() }
                 )
