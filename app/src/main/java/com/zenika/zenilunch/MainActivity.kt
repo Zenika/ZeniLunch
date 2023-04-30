@@ -13,6 +13,9 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.zenika.zenilunch.detail.DetailScreen
+import com.zenika.zenilunch.list.ListScreen
+import com.zenika.zenilunch.suggestion.SuggestionDialog
 import com.zenika.zenilunch.ui.theme.ZeniLunchTheme
 import dagger.hilt.android.AndroidEntryPoint
 

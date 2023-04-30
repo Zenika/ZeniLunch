@@ -1,4 +1,4 @@
-package com.zenika.zenilunch
+package com.zenika.zenilunch.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +18,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -25,21 +27,24 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.zenika.zenilunch.R
+import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.screenPadding
-import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
-    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit
+    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    viewModel: ListViewModel = hiltViewModel()
 ) {
-    val restaurants = createRestaurants()
+    val restaurants by viewModel.restaurants.collectAsState()
     val state = rememberLazyListState()
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) })
+            TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
         },
         content = { innerPadding ->
             Column(
@@ -92,100 +97,5 @@ fun ListScreen(
                 }
             }
         }
-    )
-}
-
-private fun createRestaurants(): List<RestaurantUIModel> {
-    return listOf(
-        RestaurantUIModel(
-            "Kaffee Berlin",
-            "Burger",
-            "€€",
-            vegetarian = true,
-            vegan = true,
-            45.767551889608235,
-            4.857335592897319
-        ),
-        RestaurantUIModel(
-            "Happy Feel",
-            "Végétarien",
-            "€€",
-            vegetarian = true,
-            vegan = true,
-            45.76864100678723,
-            4.8619654828776016
-        ),
-        RestaurantUIModel(
-            "Chez Jules",
-            "Boulangerie",
-            "€",
-            vegetarian = false,
-            vegan = false,
-            45.76648502742043,
-            4.856709398222179
-        ),
-        RestaurantUIModel(
-            "O Pad Thaï",
-            "Thaïlandais",
-            "€€",
-            vegetarian = false,
-            vegan = false,
-            45.76399480415859,
-            4.856358936709006
-        ),
-        RestaurantUIModel(
-            "Jojo Pizza",
-            "Pizzeria",
-            "€",
-            vegetarian = true,
-            vegan = false,
-            45.77004280935307,
-            4.858317698222286
-        ),
-        RestaurantUIModel(
-            "Ok Sushi",
-            "Japonais",
-            "€€",
-            true,
-            false,
-            45.76855096798334,
-            4.8494913730169795
-        ),
-        RestaurantUIModel(
-            "Chikin Bang",
-            "Coréen",
-            "€",
-            false,
-            false,
-            45.761726612268745,
-            4.856067793275381
-        ),
-        RestaurantUIModel(
-            "Manger Vite & Bien",
-            "Bar à salades",
-            "€",
-            true,
-            true,
-            45.764033379006165,
-            4.857152298222151
-        ),
-        RestaurantUIModel(
-            "Subway",
-            "Sandwich",
-            "€€",
-            true,
-            true,
-            45.76959922404694,
-            4.854517083590193
-        ),
-        RestaurantUIModel(
-            "Pepe Pizza",
-            "Pizzeria",
-            "€€",
-            false,
-            false,
-            45.76609019074048,
-            4.854910608843241
-        )
     )
 }

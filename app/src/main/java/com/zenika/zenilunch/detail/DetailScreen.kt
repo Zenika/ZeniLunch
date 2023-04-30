@@ -1,4 +1,4 @@
-package com.zenika.zenilunch
+package com.zenika.zenilunch.detail
 
 import android.content.Context
 import android.content.Intent
@@ -29,11 +29,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.zenika.zenilunch.R
+import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 
 @Composable
 fun DetailScreen(
-    viewModel: RestaurantViewModel = hiltViewModel()
+    viewModel: DetailViewModel = hiltViewModel()
 ) {
     val restaurant by viewModel.restaurant.collectAsState()
     Restaurant(
@@ -104,7 +106,8 @@ private fun Restaurant(
                     style = MaterialTheme.typography.titleLarge
                 )
                 Button(onClick = { context.openGoogleMaps(restaurant) }) {
-                    Text(text = stringResource(R.string.map),
+                    Text(
+                        text = stringResource(R.string.map),
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
