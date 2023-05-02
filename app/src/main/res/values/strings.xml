@@ -11,4 +11,5 @@
     <string name="map">Ouvrir Google Maps</string>
     <string name="suggestion">Suggestion</string>
     <string name="hide">Cacher ce restaurant</string>
+    <string name="agencySelection_title">Choisis ton agence</string>
 </resources>

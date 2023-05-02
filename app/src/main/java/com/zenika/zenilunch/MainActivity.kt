@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.zenika.zenilunch.ageny.AgencySelectionScreen
 import com.zenika.zenilunch.detail.DetailScreen
 import com.zenika.zenilunch.list.ListScreen
 import com.zenika.zenilunch.suggestion.SuggestionDialog
@@ -35,14 +36,24 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun MyAppNavHost(
         modifier: Modifier = Modifier,
-        navController: NavHostController = rememberAnimatedNavController(),
-        startDestination: String = "list"
+        navController: NavHostController = rememberAnimatedNavController()
     ) {
         AnimatedNavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = startDestination
+            startDestination = "agency-selection"
         ) {
+            composable("agency-selection") {
+                AgencySelectionScreen(
+                    onAgencySelection = {
+                        navController.navigate("list") {
+                            popUpTo("agency-selection") {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
             composable(
                 route = "list"
             ) {
