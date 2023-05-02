@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             composable("agency-selection") {
                 AgencySelectionScreen(
-                    onAgencySelection = {
+                    onExit = {
                         navController.navigate("list") {
                             popUpTo("agency-selection") {
                                 inclusive = true

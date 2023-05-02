@@ -57,12 +57,14 @@ private fun AgenciesListPreview() {
         AgenciesList(
             agencies = persistentListOf(
                 Agency(
+                    "lyon",
                     "Lyon",
                     "URL",
                     "main/restaurants.json"
                 ),
                 Agency(
-                    "Clermont-Ferand",
+                    "clermont-ferrand",
+                    "Clermont-Ferrand",
                     "URL",
                     "main/restaurants.json"
                 )

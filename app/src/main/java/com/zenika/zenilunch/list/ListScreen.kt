@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.ageny.model.Agency
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
@@ -42,17 +42,39 @@ fun ListScreen(
     modifier: Modifier = Modifier,
     viewModel: ListViewModel = hiltViewModel()
 ) {
-    val restaurants by viewModel.restaurants.collectAsState()
-    val state = rememberLazyListState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.init()
     }
 
+    when (val theState = state) {
+        ListUiState.Loading -> Text(
+            text = "Loading",
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        is ListUiState.Loaded -> ListContent(
+            theState.agency,
+            theState.restaurants,
+            goToDetailScreen,
+            openSuggestionDialog
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ListContent(
+    agency: Agency,
+    restaurants: ImmutableList<RestaurantUIModel>,
+    goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
+    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
+            TopAppBar(title = { Text(text = stringResource(R.string.list_title, agency.name)) })
         },
         content = { innerPadding ->
             Column(
@@ -79,7 +101,7 @@ fun ListScreen(
                         end = screenPadding,
                         bottom = screenPadding + innerPadding.calculateBottomPadding(),
                     ),
-                    state = state
+                    state = rememberLazyListState()
                 ) {
                     items(restaurants.size) { index ->
                         val restaurant = restaurants[index]

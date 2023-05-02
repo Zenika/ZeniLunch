@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ZeniLunch</string>
+    <string name="list_title">ZeniLunch - %s</string>
     <string name="description">Retrouve tous les reZtaurants à proximité de ton agence Zenika</string>
     <string name="name">Nom</string>
     <string name="type">Genre</string>

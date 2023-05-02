@@ -12,7 +12,7 @@ import com.zenika.zenilunch.ageny.component.AgenciesList
 @Composable
 fun AgencySelectionScreen(
     viewModel: AgencySelectionViewModel = hiltViewModel(),
-    onAgencySelection: () -> Unit
+    onExit: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -20,10 +20,18 @@ fun AgencySelectionScreen(
         viewModel.init()
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.leave.collect { leave ->
+            if (leave) {
+                onExit()
+            }
+        }
+    }
+
     AgenciesList(
         agencies = state.agencies,
-        onAgencyClick = {
-            onAgencySelection()
+        onAgencyClick = { agency ->
+            viewModel.onAgencySelect(agency)
         },
         modifier = Modifier
             .fillMaxSize()
