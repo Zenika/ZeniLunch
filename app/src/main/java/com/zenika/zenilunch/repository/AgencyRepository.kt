@@ -3,22 +3,14 @@ package com.zenika.zenilunch.repository
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.zenika.zenilunch.ageny.model.Agency
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AgencyRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
-    fun setSelectedAgency(agency: Agency) {
-        sharedPreferences.edit {
-            putString("selectedAgency", agency.id)
-        }
-    }
-
-    fun getSelectedAgency(): String? {
-        return sharedPreferences.getString("selectedAgency", null)
-    }
-
-    fun getAllAgencies(): List<Agency> = listOf(
+    private val agencies = listOf(
         Agency(
             "lyon",
             "Lyon",
@@ -32,4 +24,23 @@ class AgencyRepository @Inject constructor(
             "main/restaurants.json"
         )
     )
+
+    suspend fun setSelectedAgency(agency: Agency) {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit {
+                putString("selectedAgency", agency.id)
+            }
+        }
+    }
+
+    suspend fun getSelectedAgency(): Agency {
+        val agencyId = sharedPreferences.getString("selectedAgency", "lyon")!!
+        return withContext(Dispatchers.IO) {
+            agencies.first { it.id == agencyId }
+        }
+    }
+
+    fun getAllAgencies(): List<Agency> {
+        return agencies
+    }
 }

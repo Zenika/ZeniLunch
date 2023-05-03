@@ -2,12 +2,15 @@ package com.zenika.zenilunch.domain
 
 import com.zenika.zenilunch.ageny.model.Agency
 import com.zenika.zenilunch.repository.AgencyRepository
+import com.zenika.zenilunch.repository.RestaurantRepository
 import javax.inject.Inject
 
 class SelectAgencyUseCase @Inject constructor(
-    private val agencyRepository: AgencyRepository
+    private val agencyRepository: AgencyRepository,
+    private val restaurantRepository: RestaurantRepository
 ) {
-    operator fun invoke(agency: Agency) {
+    suspend operator fun invoke(agency: Agency) {
+        restaurantRepository.clearCache()
         agencyRepository.setSelectedAgency(agency)
     }
 }

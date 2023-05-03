@@ -1,5 +1,6 @@
 package com.zenika.zenilunch.repository
 
+import com.zenika.zenilunch.ageny.model.Agency
 import com.zenika.zenilunch.data.HiddenRestaurant
 import com.zenika.zenilunch.data.RestaurantDao
 import com.zenika.zenilunch.network.RestaurantDto
@@ -13,9 +14,9 @@ class RestaurantRepository @Inject constructor(
 ) {
     private var cache: List<RestaurantDto>? = null
 
-    suspend fun getRestaurants(): List<RestaurantDto> {
+    suspend fun getRestaurants(agency: Agency): List<RestaurantDto> {
         return when (val cache = cache) {
-            null -> restaurantNetwork.getRestaurants().also { this.cache = it }
+            null -> restaurantNetwork.getRestaurants(agency).also { this.cache = it }
             else -> cache
         }
     }
@@ -27,5 +28,9 @@ class RestaurantRepository @Inject constructor(
     suspend fun addHiddenRestaurant(restaurantName: String) {
         val restaurant = HiddenRestaurant(restaurantName, Date())
         restaurantDao.upsertRestaurant(restaurant)
+    }
+
+    fun clearCache() {
+        cache = emptyList()
     }
 }
