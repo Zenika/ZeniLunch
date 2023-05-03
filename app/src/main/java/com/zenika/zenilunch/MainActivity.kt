@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             composable("agency-selection") {
                 AgencySelectionScreen(
+                    modifier = Modifier.fillMaxSize(),
                     onExit = {
                         navController.navigate("list") {
                             popUpTo("agency-selection") {

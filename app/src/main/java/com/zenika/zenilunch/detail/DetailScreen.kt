@@ -18,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
+import com.zenika.zenilunch.ui.theme.screenPadding
 
 const val OFFICE_LATITUDE = 45.766752337134754
 const val OFFICE_LONGITUDE = 4.858952442403011
@@ -65,7 +65,16 @@ private fun Restaurant(
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) })
+            Text(
+                text = restaurant.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colorScheme.primary)
+                    .padding(16.dp),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     ) { innerPadding ->
         Column(
@@ -74,19 +83,11 @@ private fun Restaurant(
                     top = innerPadding.calculateTopPadding(),
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
                     end = innerPadding.calculateEndPadding(LocalLayoutDirection.current)
-                ),
+                )
+                .padding(screenPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                text = restaurant.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.primary),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
             Text(
                 text = restaurant.type,
                 style = MaterialTheme.typography.bodyLarge

@@ -1,7 +1,6 @@
 package com.zenika.zenilunch.agency
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -17,8 +16,9 @@ import com.zenika.zenilunch.agency.model.Agency
 
 @Composable
 fun AgencySelectionScreen(
-    viewModel: AgencySelectionViewModel = hiltViewModel(),
-    onExit: () -> Unit
+    onExit: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: AgencySelectionViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -36,7 +36,7 @@ fun AgencySelectionScreen(
 
     AgencySelectionContent(
         state,
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         onAgencySelect = viewModel::onAgencySelect
     )
 }
@@ -44,7 +44,7 @@ fun AgencySelectionScreen(
 @Composable
 fun AgencySelectionContent(
     state: AgencySelectionUiState,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onAgencySelect: (Agency) -> Unit
 ) {
     when (state) {

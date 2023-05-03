@@ -52,7 +52,7 @@ fun ListScreen(
     }
 
     when (val theState = state) {
-        ListUiState.Loading -> Box(Modifier.fillMaxSize()) {
+        ListUiState.Loading -> Box(modifier) {
             CircularProgressIndicator(
                 Modifier
                     .size(64.dp)
@@ -64,7 +64,8 @@ fun ListScreen(
             theState.agency,
             theState.restaurants,
             goToDetailScreen,
-            openSuggestionDialog
+            openSuggestionDialog,
+            modifier
         )
     }
 }
@@ -76,6 +77,7 @@ fun ListContent(
     restaurants: ImmutableList<RestaurantUIModel>,
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
     openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,

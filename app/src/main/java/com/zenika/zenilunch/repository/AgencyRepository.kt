@@ -7,6 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+private const val LOGO_BASE_URL = "https://images.prismic.io/zenika-website/"
+private const val LOGO_QUERY = "?auto=compress,format&rect=0,0,210,160&w=210&h=160"
+private const val LYON_LOGO = "66611bc6-db32-403b-8149-3dcf77e805a8_lyon.png"
+private const val CLERMONT_LOGO = "c9fadba9-7234-4f62-972d-336964bdbb6b_clermont-ferrand-petite.png"
+
 class AgencyRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
@@ -14,13 +19,13 @@ class AgencyRepository @Inject constructor(
         Agency(
             "lyon",
             "Lyon",
-            "https://images.prismic.io/zenika-website/66611bc6-db32-403b-8149-3dcf77e805a8_lyon.png?auto=compress,format&rect=0,0,210,160&w=210&h=160",
+            "$LOGO_BASE_URL$LYON_LOGO$LOGO_QUERY",
             "main/restaurants.json"
         ),
         Agency(
             "clermont-ferrand",
             "Clermont-Ferrand",
-            "https://images.prismic.io/zenika-website/c9fadba9-7234-4f62-972d-336964bdbb6b_clermont-ferrand-petite.png?auto=compress,format&rect=0,0,210,160&w=210&h=160",
+            "$LOGO_BASE_URL$CLERMONT_LOGO$LOGO_QUERY",
             "main/restaurants.json"
         )
     )

@@ -24,8 +24,8 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun AgenciesList(
     agencies: ImmutableList<Agency>,
-    onAgencyClick: (Agency) -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    onAgencyClick: (Agency) -> Unit
 ) {
     LazyColumn(
         modifier,
