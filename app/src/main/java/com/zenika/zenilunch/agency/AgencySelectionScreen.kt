@@ -1,4 +1,4 @@
-package com.zenika.zenilunch.ageny
+package com.zenika.zenilunch.agency
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.zenika.zenilunch.ageny.component.AgenciesList
+import com.zenika.zenilunch.agency.component.AgenciesList
 
 @Composable
 fun AgencySelectionScreen(

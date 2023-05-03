@@ -3,7 +3,7 @@ package com.zenika.zenilunch.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenika.zenilunch.RestaurantUIModel
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.data.HiddenRestaurant
 import com.zenika.zenilunch.domain.GetRestaurantsSortedByNameUseCase
 import com.zenika.zenilunch.domain.GetSelectedAgencyUseCase

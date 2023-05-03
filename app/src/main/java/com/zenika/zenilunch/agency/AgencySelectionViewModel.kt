@@ -1,9 +1,10 @@
-package com.zenika.zenilunch.ageny
+package com.zenika.zenilunch.agency
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.domain.GetAllAgenciesUseCase
+import com.zenika.zenilunch.domain.HasSelectedAgencyUseCase
 import com.zenika.zenilunch.domain.SelectAgencyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AgencySelectionViewModel @Inject constructor(
     private val getAgencies: GetAllAgenciesUseCase,
+    private val hasSelectedAgency: HasSelectedAgencyUseCase,
     private val selectAgency: SelectAgencyUseCase
 ) : ViewModel() {
 
@@ -38,6 +40,11 @@ class AgencySelectionViewModel @Inject constructor(
 
     fun init() {
         viewModelScope.launch {
+            if (hasSelectedAgency()) {
+                _leave.update { true }
+                return@launch
+            }
+
             val agencies = withContext(Dispatchers.Default) {
                 AgencySelectionUiState(getAgencies().toImmutableList())
             }

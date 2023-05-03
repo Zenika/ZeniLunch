@@ -1,6 +1,6 @@
 package com.zenika.zenilunch.domain
 
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import javax.inject.Inject

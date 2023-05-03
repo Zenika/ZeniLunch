@@ -2,7 +2,7 @@ package com.zenika.zenilunch.repository
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -42,5 +42,11 @@ class AgencyRepository @Inject constructor(
 
     fun getAllAgencies(): List<Agency> {
         return agencies
+    }
+
+    suspend fun hasSelectedAgency(): Boolean {
+        return withContext(Dispatchers.IO) {
+            sharedPreferences.contains("selectedAgency")
+        }
     }
 }

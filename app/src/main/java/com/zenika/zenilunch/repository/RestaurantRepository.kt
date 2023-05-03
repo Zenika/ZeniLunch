@@ -1,6 +1,6 @@
 package com.zenika.zenilunch.repository
 
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.data.HiddenRestaurant
 import com.zenika.zenilunch.data.RestaurantDao
 import com.zenika.zenilunch.network.RestaurantDto

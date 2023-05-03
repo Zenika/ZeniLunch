@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
 

@@ -1,4 +1,4 @@
-package com.zenika.zenilunch.ageny.model
+package com.zenika.zenilunch.agency.model
 
 data class Agency(
     val id: String,

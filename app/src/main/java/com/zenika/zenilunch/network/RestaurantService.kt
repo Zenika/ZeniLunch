@@ -2,7 +2,7 @@ package com.zenika.zenilunch.network
 
 import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.zenika.zenilunch.ageny.model.Agency
+import com.zenika.zenilunch.agency.model.Agency
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
