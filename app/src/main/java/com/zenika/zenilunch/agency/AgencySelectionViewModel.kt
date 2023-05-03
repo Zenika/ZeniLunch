@@ -8,7 +8,6 @@ import com.zenika.zenilunch.domain.HasSelectedAgencyUseCase
 import com.zenika.zenilunch.domain.SelectAgencyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,11 +26,11 @@ class AgencySelectionViewModel @Inject constructor(
     private val selectAgency: SelectAgencyUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AgencySelectionUiState(persistentListOf()))
+    private val _state = MutableStateFlow<AgencySelectionUiState>(AgencySelectionUiState.Loading)
     val state = _state
         .stateIn(
             scope = viewModelScope,
-            initialValue = AgencySelectionUiState(persistentListOf()),
+            initialValue = AgencySelectionUiState.Loading,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         )
 
@@ -46,7 +45,7 @@ class AgencySelectionViewModel @Inject constructor(
             }
 
             val agencies = withContext(Dispatchers.Default) {
-                AgencySelectionUiState(getAgencies().toImmutableList())
+                AgencySelectionUiState.AgenciesList(getAgencies().toImmutableList())
             }
             _state.update { agencies }
         }
@@ -60,6 +59,9 @@ class AgencySelectionViewModel @Inject constructor(
     }
 }
 
-data class AgencySelectionUiState(
-    val agencies: ImmutableList<Agency>
-)
+sealed interface AgencySelectionUiState {
+    object Loading : AgencySelectionUiState
+    data class AgenciesList(
+        val agencies: ImmutableList<Agency>
+    ) : AgencySelectionUiState
+}

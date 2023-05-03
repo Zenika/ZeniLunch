@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -49,10 +52,13 @@ fun ListScreen(
     }
 
     when (val theState = state) {
-        ListUiState.Loading -> Text(
-            text = "Loading",
-            modifier = Modifier.fillMaxWidth()
-        )
+        ListUiState.Loading -> Box(Modifier.fillMaxSize()) {
+            CircularProgressIndicator(
+                Modifier
+                    .size(64.dp)
+                    .align(Center)
+            )
+        }
 
         is ListUiState.Loaded -> ListContent(
             theState.agency,
