@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 route = "list"
             ) {
                 ListScreen(
+                    modifier = Modifier.fillMaxSize(),
                     goToDetailScreen = { restaurant ->
                         val name = restaurant.name
                         navController.navigate("detail/$name")
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 })
             ) {
                 DetailScreen(
+                    modifier = Modifier.fillMaxSize(),
                     popBack = { navController.popBackStack() }
                 )
             }

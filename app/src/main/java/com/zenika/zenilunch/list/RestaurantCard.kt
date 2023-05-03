@@ -17,10 +17,11 @@ import com.zenika.zenilunch.ui.theme.cardPadding
 @Composable
 fun RestaurantCard(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
-    restaurant: RestaurantUIModel
+    restaurant: RestaurantUIModel,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        Modifier
+        modifier
             .fillMaxWidth()
             .semantics(mergeDescendants = true) {}
             .clickable(onClickLabel = "Ouvrir le détail") {

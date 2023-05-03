@@ -44,7 +44,7 @@ fun SuggestionDialog(
 @Composable
 private fun SuggestionContent(
     restaurant: RestaurantUIModel,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier

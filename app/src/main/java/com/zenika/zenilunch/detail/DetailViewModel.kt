@@ -29,7 +29,7 @@ class DetailViewModel @Inject constructor(
         emit(restaurants)
     }.stateIn(
         viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = RestaurantUIModel("", "", "", vegetarian = false, vegan = false, .0, .0)
     )
 

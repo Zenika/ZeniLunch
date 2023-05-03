@@ -32,12 +32,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.ui.theme.screenPadding
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
     openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: ListViewModel = hiltViewModel()
 ) {
     val restaurants by viewModel.restaurants.collectAsState()
@@ -48,6 +50,7 @@ fun ListScreen(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
         },
@@ -86,21 +89,29 @@ fun ListScreen(
             }
         },
         bottomBar = {
-            Box(Modifier.fillMaxWidth()) {
-                Button(
-                    modifier = Modifier
-                        .align(BottomCenter)
-                        .padding(screenPadding),
-                    onClick = {
-                        val restaurant = restaurants.random()
-                        openSuggestionDialog(restaurant)
-                    }) {
-                    Text(
-                        text = stringResource(R.string.suggestion),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                }
-            }
+            SuggestionButton(restaurants, openSuggestionDialog)
         }
     )
+}
+
+@Composable
+private fun SuggestionButton(
+    restaurants: ImmutableList<RestaurantUIModel>,
+    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit
+) {
+    Box(Modifier.fillMaxWidth()) {
+        Button(
+            modifier = Modifier
+                .align(BottomCenter)
+                .padding(screenPadding),
+            onClick = {
+                val restaurant = restaurants.random()
+                openSuggestionDialog(restaurant)
+            }) {
+            Text(
+                text = stringResource(R.string.suggestion),
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
+    }
 }
