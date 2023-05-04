@@ -1,12 +1,13 @@
 package com.zenika.zenilunch.agency.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,24 +28,26 @@ fun AgenciesList(
     modifier: Modifier = Modifier,
     onAgencyClick: (Agency) -> Unit
 ) {
-    LazyColumn(
-        modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = modifier
+            .padding(horizontal = screenPadding),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item {
+        item(span = { GridItemSpan(2) }) {
             Text(
                 text = stringResource(R.string.agencySelection_title),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(screenPadding)
             )
         }
-        itemsIndexed(agencies) { index, agency ->
+        items(agencies) { agency ->
             AgencyCard(
                 agency = agency,
-                side = if (index % 2 == 0) AgencyImageSide.LEFT else AgencyImageSide.RIGHT,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onAgencyClick(agency) }
+                    .fillMaxWidth(),
+                onClick = { onAgencyClick(agency) }
             )
         }
     }

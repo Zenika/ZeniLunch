@@ -1,15 +1,15 @@
 package com.zenika.zenilunch.agency.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,40 +33,34 @@ import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 @Composable
 fun AgencyCard(
     agency: Agency,
-    side: AgencyImageSide,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
-    Row(
-        modifier
-            .semantics(mergeDescendants = true) {}
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        when (side) {
-            AgencyImageSide.LEFT -> {
-                AgencyImage(agency.logoUrl)
-                AgencyTitle(agency.name, TextAlign.Start)
-            }
-            AgencyImageSide.RIGHT -> {
-                AgencyTitle(agency.name, TextAlign.End)
-                AgencyImage(agency.logoUrl)
-            }
+    Card(modifier) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .semantics(mergeDescendants = true) {}
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AgencyImage(agency.logoUrl)
+            AgencyTitle(agency.name, TextAlign.Start)
         }
     }
-
 }
 
 @Composable
-private fun RowScope.AgencyTitle(
+private fun AgencyTitle(
     name: String,
     textAlign: TextAlign
 ) {
     Text(
         text = name,
         textAlign = textAlign,
-        style = MaterialTheme.typography.titleLarge,
-        modifier = Modifier.Companion.weight(1f)
+        style = MaterialTheme.typography.titleMedium
     )
 }
 
@@ -98,25 +92,13 @@ private fun AgencyImage(
     }
 }
 
-enum class AgencyImageSide {
-    LEFT,
-    RIGHT
-}
-
 @Preview
 @Composable
 private fun AgencyCardPreview() {
     PreviewZeniLunchTheme {
-        Column(Modifier.fillMaxWidth()) {
-            AgencyCard(
-                agency = Agency(
-                    "lyon",
-                    "Lyon",
-                    "URL",
-                    "main/restaurants.json"
-                ),
-                side = AgencyImageSide.LEFT
-            )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             AgencyCard(
                 agency =
                 Agency(
@@ -125,7 +107,16 @@ private fun AgencyCardPreview() {
                     "URL",
                     "main/restaurants.json"
                 ),
-                side = AgencyImageSide.RIGHT
+                onClick = {}
+            )
+            AgencyCard(
+                agency = Agency(
+                    "lyon",
+                    "Lyon",
+                    "URL",
+                    "main/restaurants.json"
+                ),
+                onClick = {}
             )
         }
     }
