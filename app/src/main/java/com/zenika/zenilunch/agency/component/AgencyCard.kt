@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.zenika.zenilunch.agency.model.Agency
+import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 
 @Composable
@@ -105,7 +106,8 @@ private fun AgencyCardPreview() {
                     "clermont-ferrand",
                     "Clermont-Ferrand",
                     "URL",
-                    "main/restaurants.json"
+                    "main/restaurants.json",
+                    LatLng(0.0, 0.0)
                 ),
                 onClick = {}
             )
@@ -114,7 +116,8 @@ private fun AgencyCardPreview() {
                     "lyon",
                     "Lyon",
                     "URL",
-                    "main/restaurants.json"
+                    "main/restaurants.json",
+                    LatLng(0.0, 0.0)
                 ),
                 onClick = {}
             )

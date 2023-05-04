@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.agency.model.Agency
+import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
@@ -63,13 +64,15 @@ private fun AgenciesListPreview() {
                     "lyon",
                     "Lyon",
                     "URL",
-                    "main/restaurants.json"
+                    "main/restaurants.json",
+                    LatLng(0.0, 0.0)
                 ),
                 Agency(
                     "clermont-ferrand",
                     "Clermont-Ferrand",
                     "URL",
-                    "main/restaurants.json"
+                    "main/restaurants.json",
+                    LatLng(0.0, 0.0)
                 )
             ),
             onAgencyClick = {},

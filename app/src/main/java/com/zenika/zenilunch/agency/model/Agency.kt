@@ -5,4 +5,5 @@ data class Agency(
     val name: String,
     val logoUrl: String,
     val restaurantsUrlPath: String,
+    val location: LatLng
 )

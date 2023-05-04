@@ -6,14 +6,17 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,11 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.agency.model.Agency
+import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
 import com.zenika.zenilunch.ui.theme.screenPadding
-
-const val OFFICE_LATITUDE = 45.766752337134754
-const val OFFICE_LONGITUDE = 4.858952442403011
 
 @Composable
 fun DetailScreen(
@@ -44,20 +46,32 @@ fun DetailScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val restaurant by viewModel.restaurant.collectAsState()
-    Restaurant(
-        restaurant,
-        popBack,
-        viewModel::hideRestaurant,
-        modifier
-            .fillMaxSize()
-    )
+    val state by viewModel.state.collectAsState()
+    when (val theState = state) {
+        is DetailViewUiState.Loaded -> Restaurant(
+            theState.restaurant,
+            theState.agency,
+            popBack,
+            viewModel::hideRestaurant,
+            modifier
+                .fillMaxSize()
+        )
+
+        DetailViewUiState.Loading -> Box(modifier) {
+            CircularProgressIndicator(
+                Modifier
+                    .size(64.dp)
+                    .align(Alignment.Center)
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Restaurant(
     restaurant: RestaurantUIModel,
+    agency: Agency,
     popBack: () -> Unit,
     hideRestaurant: () -> Unit,
     modifier: Modifier = Modifier
@@ -100,7 +114,7 @@ private fun Restaurant(
                 text = extractOptions(restaurant),
                 style = MaterialTheme.typography.bodyLarge
             )
-            OpenGoogleMapsButton(onClick = { context.openGoogleMaps(restaurant) })
+            OpenGoogleMapsButton(onClick = { context.openGoogleMaps(restaurant, agency.location) })
             HideRestaurantButton(
                 onClick = {
                     hideRestaurant()
@@ -154,11 +168,11 @@ private fun extractOptions(restaurant: RestaurantUIModel): String {
     return option
 }
 
-fun Context.openGoogleMaps(restaurant: RestaurantUIModel) {
+fun Context.openGoogleMaps(restaurant: RestaurantUIModel, origin: LatLng) {
     val latitude = restaurant.latitude
     val longitude = restaurant.longitude
     val url =
-        "http://maps.google.com/maps?saddr=$OFFICE_LATITUDE,$OFFICE_LONGITUDE&daddr=$latitude,$longitude"
+        "http://maps.google.com/maps?saddr=${origin.lat},${origin.lng}&daddr=$latitude,$longitude"
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     intent.setPackage("com.google.android.apps.maps")
 
@@ -179,6 +193,7 @@ fun FullVeganPreview() {
                 latitude = 1.0,
                 longitude = 2.0
             ),
+            Agency("", "", "", "", LatLng(0.0, 0.0)),
             popBack = { Log.d("preview", "Restaurant caché") },
             hideRestaurant = {},
             Modifier
@@ -200,6 +215,7 @@ fun FullMeatPreview() {
                 latitude = 1.0,
                 longitude = 2.0
             ),
+            Agency("", "", "", "", LatLng(0.0, 0.0)),
             popBack = { Log.d("preview", "Restaurant caché") },
             hideRestaurant = {},
             Modifier

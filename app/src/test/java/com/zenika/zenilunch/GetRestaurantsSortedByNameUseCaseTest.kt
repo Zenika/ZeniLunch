@@ -1,6 +1,7 @@
 package com.zenika.zenilunch
 
 import com.zenika.zenilunch.agency.model.Agency
+import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.domain.GetRestaurantsSortedByNameUseCase
 import com.zenika.zenilunch.network.RestaurantDto
 import com.zenika.zenilunch.repository.AgencyRepository
@@ -55,7 +56,11 @@ internal class GetRestaurantsSortedByNameUseCaseTest {
         runTest {
             // Given
             coEvery { agencyRepository.getSelectedAgency() } returns Agency(
-                "id", "name", "logoUrl", "path"
+                "id",
+                "name",
+                "logoUrl",
+                "path",
+                LatLng(0.0, 0.0)
             )
             coEvery { restaurantRepository.getRestaurants(any()) } returns listOf(
                 chezOlivier,
