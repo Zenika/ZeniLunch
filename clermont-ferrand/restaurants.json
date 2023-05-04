@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Au Bureau",
+    "type": "Burger",
+    "price": "€€",
+    "vegetarian": true,
+    "vegan": false,
+    "latitude": 45.75823324211859,
+    "longitude": 3.1477494480177106
+  }
+]
