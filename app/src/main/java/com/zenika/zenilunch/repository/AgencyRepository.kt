@@ -21,7 +21,7 @@ class AgencyRepository @Inject constructor(
             "lyon",
             "Lyon",
             "$LOGO_BASE_URL$LYON_LOGO$LOGO_QUERY",
-            "main/restaurants.json",
+            "lyon/restaurants.json",
             LatLng(
                 lat = 45.766752337134754,
                 lng = 4.858952442403011
@@ -31,7 +31,7 @@ class AgencyRepository @Inject constructor(
             "clermont-ferrand",
             "Clermont-Ferrand",
             "$LOGO_BASE_URL$CLERMONT_LOGO$LOGO_QUERY",
-            "main/restaurants.json",
+            "clermont-ferrand/restaurants.json",
             LatLng(
                 lat = 45.75909302686358,
                 lng = 3.130090039878613
