@@ -39,7 +39,7 @@ class RestaurantNetwork @Inject constructor() {
     suspend fun getRestaurants(agency: Agency): List<RestaurantDto> {
         val restaurants: RestaurantService by lazy {
             Retrofit.Builder()
-                .baseUrl("https://raw.githubusercontent.com/audreygentilizenika/ZeniLunch/")
+                .baseUrl("https://raw.githubusercontent.com/Zenika/ZeniLunch/config/")
                 .client(createOkHttpClient())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(MoshiConverterFactory.create())
