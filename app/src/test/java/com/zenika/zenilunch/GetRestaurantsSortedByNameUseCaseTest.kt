@@ -1,7 +1,10 @@
 package com.zenika.zenilunch
 
+import com.zenika.zenilunch.agency.model.Agency
+import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.domain.GetRestaurantsSortedByNameUseCase
 import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
@@ -17,6 +20,9 @@ import org.junit.jupiter.api.extension.ExtendWith
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MockKExtension::class)
 internal class GetRestaurantsSortedByNameUseCaseTest {
+
+    @MockK
+    lateinit var agencyRepository: AgencyRepository
 
     @MockK
     lateinit var restaurantRepository: RestaurantRepository
@@ -49,7 +55,14 @@ internal class GetRestaurantsSortedByNameUseCaseTest {
     fun shouldObserveOrder() {
         runTest {
             // Given
-            coEvery { restaurantRepository.getRestaurants() } returns listOf(
+            coEvery { agencyRepository.getSelectedAgency() } returns Agency(
+                "id",
+                "name",
+                "logoUrl",
+                "path",
+                LatLng(0.0, 0.0)
+            )
+            coEvery { restaurantRepository.getRestaurants(any()) } returns listOf(
                 chezOlivier,
                 chezAudrey
             )

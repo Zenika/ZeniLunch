@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -31,10 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.R
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
@@ -42,17 +45,44 @@ fun ListScreen(
     modifier: Modifier = Modifier,
     viewModel: ListViewModel = hiltViewModel()
 ) {
-    val restaurants by viewModel.restaurants.collectAsState()
-    val state = rememberLazyListState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.init()
     }
 
+    when (val theState = state) {
+        ListUiState.Loading -> Box(modifier) {
+            CircularProgressIndicator(
+                Modifier
+                    .size(64.dp)
+                    .align(Center)
+            )
+        }
+
+        is ListUiState.Loaded -> ListContent(
+            theState.agency,
+            theState.restaurants,
+            goToDetailScreen,
+            openSuggestionDialog,
+            modifier
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ListContent(
+    agency: Agency,
+    restaurants: ImmutableList<RestaurantUIModel>,
+    goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
+    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
+            TopAppBar(title = { Text(text = stringResource(R.string.list_title, agency.name)) })
         },
         content = { innerPadding ->
             Column(
@@ -79,7 +109,7 @@ fun ListScreen(
                         end = screenPadding,
                         bottom = screenPadding + innerPadding.calculateBottomPadding(),
                     ),
-                    state = state
+                    state = rememberLazyListState()
                 ) {
                     items(restaurants.size) { index ->
                         val restaurant = restaurants[index]

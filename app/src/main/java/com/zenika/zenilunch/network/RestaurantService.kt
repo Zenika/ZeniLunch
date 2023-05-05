@@ -2,6 +2,7 @@ package com.zenika.zenilunch.network
 
 import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.zenika.zenilunch.agency.model.Agency
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,12 +11,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface RestaurantService {
-    @GET("main/restaurants.json")
-    suspend fun getRestaurants(): List<RestaurantDto>
+    @GET("{file}")
+    suspend fun getRestaurants(@Path("file") file: String): List<RestaurantDto>
 }
 
 @Module
@@ -34,7 +36,7 @@ class RestaurantNetwork @Inject constructor() {
 
     @Provides
     @Singleton
-    suspend fun getRestaurants(): List<RestaurantDto> {
+    suspend fun getRestaurants(agency: Agency): List<RestaurantDto> {
         val restaurants: RestaurantService by lazy {
             Retrofit.Builder()
                 .baseUrl("https://raw.githubusercontent.com/audreygentilizenika/ZeniLunch/")
@@ -44,6 +46,6 @@ class RestaurantNetwork @Inject constructor() {
                 .build()
                 .create(RestaurantService::class.java)
         }
-        return restaurants.getRestaurants()
+        return restaurants.getRestaurants(agency.restaurantsUrlPath)
     }
 }

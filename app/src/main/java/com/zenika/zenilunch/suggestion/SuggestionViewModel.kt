@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.mapper.convertRestaurantObject
+import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SuggestionViewModel @Inject constructor(
+    private val agencyRepository: AgencyRepository,
     private val restaurantRepository: RestaurantRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -31,7 +33,7 @@ class SuggestionViewModel @Inject constructor(
     )
 
     private suspend fun getRestaurant(): RestaurantUIModel {
-        val restaurants = restaurantRepository.getRestaurants()
+        val restaurants = restaurantRepository.getRestaurants(agencyRepository.getSelectedAgency())
         val restaurant = restaurants.first { restaurant -> restaurant.name == restaurantName }
         return restaurant.convertRestaurantObject()
     }

@@ -1,12 +1,17 @@
 package com.zenika.zenilunch.domain
 
 import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import javax.inject.Inject
 
 class GetRestaurantsSortedByNameUseCase @Inject constructor(
-    private val restaurantRepository: RestaurantRepository
+    private val restaurantRepository: RestaurantRepository,
+    private val agencyRepository: AgencyRepository
 ) {
-    suspend operator fun invoke(): List<RestaurantDto> =
-        restaurantRepository.getRestaurants().sortedBy { it.name }
+    suspend operator fun invoke(): List<RestaurantDto> {
+        val agency = agencyRepository.getSelectedAgency()
+        return restaurantRepository.getRestaurants(agency)
+            .sortedBy { it.name }
+    }
 }

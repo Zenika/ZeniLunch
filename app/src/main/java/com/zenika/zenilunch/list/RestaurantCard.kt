@@ -24,14 +24,14 @@ fun RestaurantCard(
         modifier
             .fillMaxWidth()
             .semantics(mergeDescendants = true) {}
-            .clickable(onClickLabel = "Ouvrir le détail") {
-                goToDetailScreen(restaurant)
-            }
     ) {
         Text(
             text = restaurant.name, Modifier
-                .padding(cardPadding)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .clickable(onClickLabel = "Ouvrir le détail") {
+                    goToDetailScreen(restaurant)
+                }
+                .padding(cardPadding),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall
         )
