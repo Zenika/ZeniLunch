@@ -115,5 +115,13 @@
     "vegan": false,
     "latitude": 45.765501274681405,
     "longitude": 4.8553054395691895
+  },
+  { "name": "Beyrouth kitchen",
+    "type": "Libanais",
+    "price": "€€",
+    "vegetarian": true,
+    "vegan": true,
+    "latitude": 45.76784226399409,
+    "longitude": 4.857741898490212
   }
 ]
