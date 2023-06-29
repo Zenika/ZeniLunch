@@ -64,10 +64,7 @@ class MainActivity : AppCompatActivity() {
                         val name = restaurant.name
                         navController.navigate("detail/$name")
                     },
-                    openSuggestionDialog = { restaurant ->
-                        val name = restaurant.name
-                        navController.navigate("suggestion/$name")
-                    }
+                    openSuggestionDialog = {  navController.navigate("suggestions") }
                 )
             }
             composable(
@@ -81,12 +78,7 @@ class MainActivity : AppCompatActivity() {
                     popBack = { navController.popBackStack() }
                 )
             }
-            dialog(
-                route = "suggestion/{name}",
-                arguments = listOf(navArgument("name") {
-                    type = NavType.StringType
-                })
-            ) {
+            dialog("suggestions") {
                 SuggestionDialog(
                     onDismissRequest = { navController.popBackStack() }
                 )

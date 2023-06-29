@@ -10,7 +10,7 @@
     <string name="vegan">Vegan</string>
     <string name="noOption">Pas d\'option</string>
     <string name="map">Ouvrir Google Maps</string>
-    <string name="suggestion">Suggestion</string>
+    <string name="suggestions">Suggestions</string>
     <string name="hide">Cacher ce restaurant</string>
     <string name="agencySelection_title">Choisis ton agence</string>
 </resources>
