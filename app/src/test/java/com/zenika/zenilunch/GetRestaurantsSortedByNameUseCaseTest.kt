@@ -10,14 +10,12 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MockKExtension::class)
 internal class GetRestaurantsSortedByNameUseCaseTest {
 
@@ -62,7 +60,7 @@ internal class GetRestaurantsSortedByNameUseCaseTest {
                 "path",
                 LatLng(0.0, 0.0)
             )
-            coEvery { restaurantRepository.getRestaurants(any()) } returns listOf(
+            coEvery { restaurantRepository.getUnhiddenRestaurants(any()) } returns listOf(
                 chezOlivier,
                 chezAudrey
             )

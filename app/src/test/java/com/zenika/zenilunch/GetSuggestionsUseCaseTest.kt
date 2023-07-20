@@ -53,7 +53,7 @@ internal class GetSuggestionsUseCaseTest {
                 "path",
                 LatLng(0.0, 0.0)
             )
-            coEvery { restaurantRepository.getRestaurants(any()) } returns
+            coEvery { restaurantRepository.getUnhiddenRestaurants(any()) } returns
                 (0 until givenRestaurantsSize).map { chezLoic }
 
             // When

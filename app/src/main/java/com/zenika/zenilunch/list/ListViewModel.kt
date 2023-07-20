@@ -9,10 +9,8 @@ import com.zenika.zenilunch.domain.GetRestaurantsSortedByNameUseCase
 import com.zenika.zenilunch.domain.GetSelectedAgencyUseCase
 import com.zenika.zenilunch.mapper.convertRestaurantObject
 import com.zenika.zenilunch.network.RestaurantDto
-import com.zenika.zenilunch.repository.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +25,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val getRestaurantSortedByName: GetRestaurantsSortedByNameUseCase,
-    private val restaurantRepository: RestaurantRepository,
     private val getSelectedAgency: GetSelectedAgencyUseCase
 ) : ViewModel() {
 
@@ -53,11 +50,8 @@ class ListViewModel @Inject constructor(
     }
 
     private suspend fun getRestaurants(): List<RestaurantUIModel> {
-        val hiddenRestaurants = restaurantRepository.getHiddenRestaurants()
         val restaurants = getRestaurantSortedByName()
-        return restaurants
-            .filterNot { it in hiddenRestaurants }
-            .map { restaurant -> restaurant.convertRestaurantObject() }
+        return restaurants.map { restaurant -> restaurant.convertRestaurantObject() }
     }
 }
 

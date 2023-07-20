@@ -18,11 +18,11 @@ class GetSuggestionsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): ImmutableList<RestaurantDto> {
         val agency = agencyRepository.getSelectedAgency()
-        val restaurants = restaurantRepository.getRestaurants(agency).toImmutableList()
+        val restaurants = restaurantRepository.getUnhiddenRestaurants(agency)
         return getRandomRestaurants(restaurants)
     }
 
-    private fun getRandomRestaurants(restaurants: ImmutableList<RestaurantDto>): ImmutableList<RestaurantDto> {
+    private fun getRandomRestaurants(restaurants: List<RestaurantDto>): ImmutableList<RestaurantDto> {
         return restaurants.shuffled()
             .subList(0, min(NB_SUGGESTIONS_DESIRED, restaurants.size))
             .toImmutableList()
