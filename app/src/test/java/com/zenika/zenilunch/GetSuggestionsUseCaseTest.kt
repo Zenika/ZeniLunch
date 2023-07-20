@@ -10,7 +10,6 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
@@ -19,7 +18,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MockKExtension::class)
 internal class GetSuggestionsUseCaseTest {
 
@@ -45,7 +43,7 @@ internal class GetSuggestionsUseCaseTest {
     @ParameterizedTest
     @MethodSource("givenRestaurantsSizeAndExpectedSuggestionsSize")
     @DisplayName("Should get maximum 3 suggestions")
-    fun shouldGetMaximum3Suggestions(givenRestataurantsSize: Int, expectedSuggestionsSize: Int) {
+    fun shouldGetMaximum3Suggestions(givenRestaurantsSize: Int, expectedSuggestionsSize: Int) {
         runTest {
             // Given
             coEvery { agencyRepository.getSelectedAgency() } returns Agency(
@@ -56,7 +54,7 @@ internal class GetSuggestionsUseCaseTest {
                 LatLng(0.0, 0.0)
             )
             coEvery { restaurantRepository.getRestaurants(any()) } returns
-                (0 until givenRestataurantsSize).map { chezLoic }
+                (0 until givenRestaurantsSize).map { chezLoic }
 
             // When
             val suggestions = getSuggestionsUseCase()

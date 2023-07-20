@@ -1,6 +1,7 @@
 package com.zenika.zenilunch.suggestion
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,7 +43,9 @@ fun SuggestionDialog(
 private fun SuggestionsContent(
     restaurants: ImmutableList<RestaurantUIModel>,
 ) {
-    Column {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         restaurants.forEach { restaurant ->
             SuggestionContent(
                 restaurant
@@ -57,7 +61,7 @@ private fun SuggestionContent(
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(dialogPadding)
+            .padding(horizontal = dialogPadding)
             .background(
                 MaterialTheme.colorScheme.inversePrimary,
                 MaterialTheme.shapes.extraLarge
