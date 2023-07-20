@@ -37,11 +37,12 @@ import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun ListScreen(
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
-    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    openSuggestionDialog: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ListViewModel = hiltViewModel()
 ) {
@@ -76,7 +77,7 @@ fun ListContent(
     agency: Agency,
     restaurants: ImmutableList<RestaurantUIModel>,
     goToDetailScreen: (restaurant: RestaurantUIModel) -> Unit,
-    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit,
+    openSuggestionDialog: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -119,15 +120,14 @@ fun ListContent(
             }
         },
         bottomBar = {
-            SuggestionButton(restaurants, openSuggestionDialog)
+            SuggestionButton(openSuggestionDialog)
         }
     )
 }
 
 @Composable
 private fun SuggestionButton(
-    restaurants: ImmutableList<RestaurantUIModel>,
-    openSuggestionDialog: (restaurant: RestaurantUIModel) -> Unit
+    openSuggestionDialog: () -> Unit
 ) {
     Box(Modifier.fillMaxWidth()) {
         Button(
@@ -135,11 +135,10 @@ private fun SuggestionButton(
                 .align(BottomCenter)
                 .padding(screenPadding),
             onClick = {
-                val restaurant = restaurants.random()
-                openSuggestionDialog(restaurant)
+                openSuggestionDialog()
             }) {
             Text(
-                text = stringResource(R.string.suggestion),
+                text = stringResource(R.string.suggestions),
                 style = MaterialTheme.typography.headlineSmall
             )
         }

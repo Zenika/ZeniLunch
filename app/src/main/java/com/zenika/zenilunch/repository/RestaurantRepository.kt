@@ -21,8 +21,11 @@ class RestaurantRepository @Inject constructor(
         }
     }
 
-    suspend fun getHiddenRestaurants(): List<HiddenRestaurant> {
-        return restaurantDao.getHiddenRestaurants()
+    suspend fun getUnhiddenRestaurants(agency: Agency): List<RestaurantDto> {
+        val hiddenRestaurants = restaurantDao.getHiddenRestaurants()
+        return getRestaurants(agency).filter { restaurant ->
+            hiddenRestaurants.none { hidden -> hidden.name == restaurant.name }
+        }
     }
 
     suspend fun addHiddenRestaurant(restaurantName: String) {

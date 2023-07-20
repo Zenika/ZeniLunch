@@ -11,7 +11,7 @@ class GetRestaurantsSortedByNameUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): List<RestaurantDto> {
         val agency = agencyRepository.getSelectedAgency()
-        return restaurantRepository.getRestaurants(agency)
+        return restaurantRepository.getUnhiddenRestaurants(agency)
             .sortedBy { it.name }
     }
 }
