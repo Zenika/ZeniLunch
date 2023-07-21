@@ -7,7 +7,9 @@ import com.zenika.zenilunch.network.RestaurantDto
 import com.zenika.zenilunch.network.RestaurantNetwork
 import java.util.Date
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RestaurantRepository @Inject constructor(
     private val restaurantDao: RestaurantDao,
     private val restaurantNetwork: RestaurantNetwork
