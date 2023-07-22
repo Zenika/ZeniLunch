@@ -1,7 +1,9 @@
-package com.zenika.zenilunch.data
+package com.zenika.zenilunch.di
 
 import android.content.Context
 import androidx.room.Room
+import com.zenika.zenilunch.data.RestaurantDao
+import com.zenika.zenilunch.data.RestaurantDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

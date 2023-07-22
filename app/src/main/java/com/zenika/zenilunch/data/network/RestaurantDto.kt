@@ -1,4 +1,4 @@
-package com.zenika.zenilunch.network
+package com.zenika.zenilunch.data.network
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

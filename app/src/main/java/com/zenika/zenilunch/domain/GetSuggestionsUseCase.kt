@@ -1,6 +1,6 @@
 package com.zenika.zenilunch.domain
 
-import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.data.network.RestaurantDto
 import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import kotlinx.collections.immutable.ImmutableList

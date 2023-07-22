@@ -8,7 +8,7 @@ import com.zenika.zenilunch.data.HiddenRestaurant
 import com.zenika.zenilunch.domain.GetRestaurantsSortedByNameUseCase
 import com.zenika.zenilunch.domain.GetSelectedAgencyUseCase
 import com.zenika.zenilunch.mapper.convertRestaurantObject
-import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.data.network.RestaurantDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

@@ -3,8 +3,8 @@ package com.zenika.zenilunch.repository
 import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.data.HiddenRestaurant
 import com.zenika.zenilunch.data.RestaurantDao
-import com.zenika.zenilunch.network.RestaurantDto
-import com.zenika.zenilunch.network.RestaurantNetwork
+import com.zenika.zenilunch.data.network.RestaurantDto
+import com.zenika.zenilunch.data.network.RestaurantGitHubApi
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 @Singleton
 class RestaurantRepository @Inject constructor(
     private val restaurantDao: RestaurantDao,
-    private val restaurantNetwork: RestaurantNetwork
+    private val restaurantGitHubApi: RestaurantGitHubApi
 ) {
     private var cache: List<RestaurantDto>? = null
 
     suspend fun getRestaurants(agency: Agency): List<RestaurantDto> {
         return when (val cache = cache) {
-            null -> restaurantNetwork.getRestaurants(agency).also { this.cache = it }
+            null -> restaurantGitHubApi.getRestaurants(agency.restaurantsUrlPath).also { this.cache = it }
             else -> cache
         }
     }

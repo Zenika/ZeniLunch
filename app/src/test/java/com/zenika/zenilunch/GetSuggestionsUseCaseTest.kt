@@ -3,13 +3,14 @@ package com.zenika.zenilunch
 import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.agency.model.LatLng
 import com.zenika.zenilunch.domain.GetSuggestionsUseCase
-import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.data.network.RestaurantDto
 import com.zenika.zenilunch.repository.AgencyRepository
 import com.zenika.zenilunch.repository.RestaurantRepository
 import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
@@ -18,6 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MockKExtension::class)
 internal class GetSuggestionsUseCaseTest {
 
