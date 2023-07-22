@@ -3,10 +3,10 @@ package com.zenika.zenilunch.suggestion
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.data.network.RestaurantDto
 import com.zenika.zenilunch.domain.GetSuggestionsUseCase
 import com.zenika.zenilunch.domain.NB_SUGGESTIONS_DESIRED
 import com.zenika.zenilunch.mapper.convertRestaurantObject
-import com.zenika.zenilunch.data.network.RestaurantDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

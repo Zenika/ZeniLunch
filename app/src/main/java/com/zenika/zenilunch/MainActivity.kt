@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                         val name = restaurant.name
                         navController.navigate("detail/$name")
                     },
-                    openSuggestionDialog = {  navController.navigate("suggestions") }
+                    openSuggestionDialog = { navController.navigate("suggestions") }
                 )
             }
             composable(
