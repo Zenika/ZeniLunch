@@ -1,7 +1,7 @@
 package com.zenika.zenilunch.mapper
 
 import com.zenika.zenilunch.RestaurantUIModel
-import com.zenika.zenilunch.network.RestaurantDto
+import com.zenika.zenilunch.data.network.RestaurantDto
 
 fun RestaurantDto.convertRestaurantObject() = RestaurantUIModel(
     this.name,

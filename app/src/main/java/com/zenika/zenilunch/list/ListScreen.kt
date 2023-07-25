@@ -37,7 +37,6 @@ import com.zenika.zenilunch.RestaurantUIModel
 import com.zenika.zenilunch.agency.model.Agency
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun ListScreen(
