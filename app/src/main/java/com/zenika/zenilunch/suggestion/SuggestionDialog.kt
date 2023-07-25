@@ -1,5 +1,9 @@
 package com.zenika.zenilunch.suggestion
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,27 +19,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zenika.zenilunch.RestaurantUIModel
+import com.zenika.zenilunch.ui.component.AutoResizeDialog
 import com.zenika.zenilunch.ui.theme.PreviewZeniLunchTheme
-import com.zenika.zenilunch.ui.theme.dialogPadding
 import com.zenika.zenilunch.ui.theme.screenPadding
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SuggestionDialog(
     onDismissRequest: () -> Unit,
     viewModel: SuggestionViewModel = hiltViewModel()
 ) {
     val restaurants by viewModel.restaurants.collectAsState()
-    Dialog(
+    AutoResizeDialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
     ) {
-        SuggestionsContent(restaurants)
+        AnimatedVisibility(
+            visible = restaurants.isNotEmpty(),
+            label = "suggestions-animation",
+            enter = scaleIn(initialScale = .9f) + fadeIn()
+        ) {
+            SuggestionsContent(restaurants)
+        }
     }
 }
 
@@ -61,7 +69,6 @@ private fun SuggestionContent(
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = dialogPadding)
             .background(
                 MaterialTheme.colorScheme.inversePrimary,
                 MaterialTheme.shapes.extraLarge
