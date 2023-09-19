@@ -23,12 +23,37 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("release-key.keystore")
+            storePassword = "password"
+            keyAlias = "password"
+            keyPassword = "password"
+        }
+    }
+
     buildTypes {
+        debug {  
+            debuggable true  
+        } 
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions += "version"
+    productFlavors {  
+        create("alpha") {  
+            dimension = "version"  
+        }
+        create("prod") {  
+            dimension = "version" 
+        }  
+    }
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
