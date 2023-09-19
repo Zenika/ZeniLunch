@@ -57,23 +57,13 @@ Option 2 : Alpha badge and display version or not and chosse the mode: dark or l
 
 Option 3 : Beta badge and display version or not and chosse the mode: dark or light
 
-### download_certificates_and_profiles
-
-```sh
-[bundle exec] fastlane download_certificates_and_profiles
-```
-
-Download certificates and profiles
-
-Match docs : https://docs.fastlane.tools/actions/match/
-
 ### build
 
 ```sh
 [bundle exec] fastlane build
 ```
 
-Build iOS
+Build Android
 
 ### deploy_firebase_app_tester
 
@@ -91,7 +81,7 @@ Create Firebase token : https://firebase.google.com/docs/cli#cli-ci-systems
 [bundle exec] fastlane deploy_appstore
 ```
 
-Deploy iOS - AppStore
+Deploy Android - Playstore
 
 Create API KEY : https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file
 

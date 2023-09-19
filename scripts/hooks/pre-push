@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./gradlew :app:detekt :app:testDebugUnitTest
+./gradlew :app:detekt :app:testAlphaDebugUnitTest
 
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then

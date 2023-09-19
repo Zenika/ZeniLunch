@@ -21,14 +21,15 @@ platform :android do
     init_project(
       flavor: ENV["FLAVOR"],
       build_type: ENV["BUILD_TYPE"],
-      task: ENV["TASK"]
+      task: ENV["TASK"],
+      keystore_path: ENV["KEYSTORE_PATH"]
     ) 
   end
 
   desc "Build"
   lane :build_android do
     bump_version_number_and_build_number(version: ENV["REGEX"], build_number:ENV["BUILD_NUMBER"])
-    #display_badge_on_appIcon(badge: "alpha", dark:true, version:true) #badge: alpha or beta or no-badge, dark: true or false(light) 
+    display_badge_on_appIcon(badge: "alpha", dark:false, version:true, image_launcher_path: "/app/src/main/res/mipmap-*/ic_launcher.webp") #badge: alpha or beta or no-badge, dark: true or false(light) 
     build
   end
 end

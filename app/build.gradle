@@ -25,10 +25,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("release-key.keystore")
-            storePassword = "password"
-            keyAlias = "password"
-            keyPassword = "password"
+            storeFile = file("debug-key.keystore")
+            storePassword = "zenika"
+            keyAlias = "alias"
+            keyPassword = "zenika"
         }
     }
 
@@ -39,7 +39,7 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
