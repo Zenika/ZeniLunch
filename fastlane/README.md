@@ -71,7 +71,7 @@ Build Android
 [bundle exec] fastlane deploy_firebase_app_tester
 ```
 
-Deploy iOS - AppTester
+Deploy Android - AppTester
 
 Create Firebase token : https://firebase.google.com/docs/cli#cli-ci-systems
 
@@ -113,6 +113,14 @@ Init project variables
 ```
 
 Build
+
+### android deploy_android
+
+```sh
+[bundle exec] fastlane android deploy_android
+```
+
+Deploy on Firebase
 
 ----
 

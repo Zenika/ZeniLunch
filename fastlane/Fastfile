@@ -1,14 +1,14 @@
 #Choose your import : Local or Remote
 
 #Local Fastfile
-import "../../../POC/Fastlane-Template/fastlane/Fastfile-Android"
+import "../../Fastlane-Template/fastlane/Fastfile-Android"
 
 #Remote Fastfile
 # import_from_git(
 #   url: "git@github.com:Zenika/Fastlane-Template.git", # The URL of the repository to import the Fastfile from.
 #   branch: "main", # The branch to checkout on the repository.
 #   path: "fastlane/Fastfile-Android", # The path of the Fastfile in the repository.
-#   version: "0.0.5" # The version to checkout on the repository. Optimistic match operator can be used to select the latest version within constraints.
+#   version: "0.0.6" # The version to checkout on the repository. Optimistic match operator can be used to select the latest version within constraints.
 # )
 
 platform :android do
@@ -22,7 +22,10 @@ platform :android do
       flavor: ENV["FLAVOR"],
       build_type: ENV["BUILD_TYPE"],
       task: ENV["TASK"],
-      keystore_path: ENV["KEYSTORE_PATH"]
+      keystore_path: ENV["KEYSTORE_PATH"],
+      keystore_password_store: ENV["KEYSTORE_PASSWORD_STORE"],
+      keystore_alias: ENV["KEYSTORE_ALIAS"],
+      keystore_password_key: ENV["KEYSTORE_PASSWORD_KEY"]
     ) 
   end
 
@@ -31,5 +34,21 @@ platform :android do
     bump_version_number_and_build_number(version: ENV["REGEX"], build_number:ENV["BUILD_NUMBER"])
     display_badge_on_appIcon(badge: "alpha", dark:false, version:true, image_launcher_path: "/app/src/main/res/mipmap-*/ic_launcher.webp") #badge: alpha or beta or no-badge, dark: true or false(light) 
     build
+  end
+
+  desc "Deploy on Firebase"
+  lane :deploy_android do
+    generate_release_note(env: ENV["RELEASE_NOTE_ENV"])
+
+    #Choose the deploy lane: deploy_firebase_app_tester or deploy_appstore
+    deploy_firebase_app_tester(
+      token: ENV["FIREBASE_TOKEN"],
+      firebase_app_id: ENV["FIREBASE_APP_ID"]
+    )
+    
+    # deploy_playstore(
+    #   team_id: ENV["TEAM_ID"],
+    #   team_name: ENV["TEAM_NAME"]
+    # )
   end
 end
