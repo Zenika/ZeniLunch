@@ -8,11 +8,13 @@ import_from_git(
   url: "git@github.com:Zenika/Fastlane-Template.git", # The URL of the repository to import the Fastfile from.
   branch: "main", # The branch to checkout on the repository.
   path: "fastlane/Fastfile-Android", # The path of the Fastfile in the repository.
-  version: "0.0.7" # The version to checkout on the repository. Optimistic match operator can be used to select the latest version within constraints.
+  version: "0.0.8" # The version to checkout on the repository. Optimistic match operator can be used to select the latest version within constraints.
 )
 
 platform :android do
   before_all do |lane|
+    puts Dir.pwd
+    puts "alias" + ENV["KEYSTORE_ALIAS"]
     setup_project
   end
 
@@ -22,7 +24,7 @@ platform :android do
       flavor: ENV["FLAVOR"],
       build_type: ENV["BUILD_TYPE"],
       task: ENV["TASK"],
-      keystore_path: ENV["KEYSTORE_PATH"],
+      keystore_path: ENV["KEYSTORE_PATH"], #Add keystore to root project
       keystore_password_store: ENV["KEYSTORE_PASSWORD_STORE"],
       keystore_alias: ENV["KEYSTORE_ALIAS"],
       keystore_password_key: ENV["KEYSTORE_PASSWORD_KEY"]
