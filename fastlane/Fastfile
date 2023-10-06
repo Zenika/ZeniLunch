@@ -43,11 +43,16 @@ platform :android do
     #Choose the deploy lane: deploy_firebase_app_tester or deploy_playstore
     deploy_firebase_app_tester(
       token: ENV["FIREBASE_TOKEN"],
-      firebase_app_id: ENV["FIREBASE_APP_ID"]
+      firebase_app_id: ENV["FIREBASE_APP_ID"],
+      groups: ENV["FIREBASE_GROUP"]
     )
 
-    # deploy_playstore(
 
+    # upload_to_play_store(
+    #   track: "internal",
+    #   aab: "app/build/outputs/bundle/alphaRelease/app-alpha-release.aab",
+    #   json_key: "play-developer-cd32a-df7b5c93bc53.json",
+    #   package_name: "com.zenika.app.zenilunch"
     # )
 
   end
