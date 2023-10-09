@@ -15,7 +15,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.zenika.zenilunch"
+        applicationId "com.zenika.app.zenilunch"
         minSdk 21
         targetSdk 33
         versionCode 8
@@ -48,6 +48,7 @@ android {
     productFlavors {  
         create("alpha") {  
             dimension = "version"  
+            applicationIdSuffix ".alpha"
         }
         create("prod") {  
             dimension = "version" 

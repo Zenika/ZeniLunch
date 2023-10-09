@@ -7,6 +7,64 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:545308424235:android:188f441c15c30debef526e",
+        "android_client_info": {
+          "package_name": "com.zenika.app.zenilunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545308424235-iau4sjqr3ek63n7uad1mjafmt9ngqvjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2TndQMgInssD8AD4RkjrtkkNWRYgNYkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545308424235-iau4sjqr3ek63n7uad1mjafmt9ngqvjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545308424235:android:685721367dc93930ef526e",
+        "android_client_info": {
+          "package_name": "com.zenika.app.zenilunch.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545308424235-iau4sjqr3ek63n7uad1mjafmt9ngqvjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2TndQMgInssD8AD4RkjrtkkNWRYgNYkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545308424235-iau4sjqr3ek63n7uad1mjafmt9ngqvjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:545308424235:android:5997a4aefd5395efef526e",
         "android_client_info": {
           "package_name": "com.zenika.zenilunch"
