@@ -1,0 +1,41 @@
+name: Pipeline Android 🤖
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+      - hotfix/**
+      - release/**
+  pull_request:
+    branches:
+      - feature/**
+    types: [ opened, reopened, synchronize, labeled ]
+  workflow_dispatch:
+    inputs:
+      build-ios:
+        description: Build Android app
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  build-ipa:
+    name: 🚀 iOS Build
+    runs-on: self-hosted
+    timeout-minutes: 25
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+      - name: Setup ruby
+        run: rbenv local 3.0.0
+      - name: Install Gem
+        run: bundle install
+      - name: Fastlane - Build
+        run: fastlane android build_android --env alpha
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
