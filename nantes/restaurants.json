@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "name": "Melting Potes",
+    "type": "Burger",
+    "price": "€€",
+    "vegetarian": true,
+    "vegan": true,
+    "latitude": 47.20517534904707, 
+    "longitude": -1.55778327423725
+  }
+]
