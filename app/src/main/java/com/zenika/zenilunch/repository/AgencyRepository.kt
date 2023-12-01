@@ -12,6 +12,8 @@ private const val LOGO_BASE_URL = "https://images.prismic.io/zenika-website/"
 private const val LOGO_QUERY = "?auto=compress,format&rect=0,0,210,160&w=210&h=160"
 private const val LYON_LOGO = "66611bc6-db32-403b-8149-3dcf77e805a8_lyon.png"
 private const val CLERMONT_LOGO = "c9fadba9-7234-4f62-972d-336964bdbb6b_clermont-ferrand-petite.png"
+private const val NANTES_LOGO = "https://loirelovers.fr" +
+        "/wp-content/uploads/2022/12/visiter-elephant-nantes-machines-ile-.jpeg"
 
 class AgencyRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
@@ -36,7 +38,17 @@ class AgencyRepository @Inject constructor(
                 lat = 45.75909302686358,
                 lng = 3.130090039878613
             )
-        )
+        ),
+        Agency(
+            "nantes",
+            "Nantes",
+            NANTES_LOGO,
+            "nantes/restaurants.json",
+            LatLng(
+                lat = 47.20751455439292,
+                lng = -1.5560446315392198
+            )
+        ),
     )
 
     suspend fun setSelectedAgency(agency: Agency) {

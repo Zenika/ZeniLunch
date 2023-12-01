@@ -17,8 +17,9 @@ import androidx.compose.ui.window.DialogProperties
  */
 @Composable
 fun AutoResizeDialog(
-    properties: DialogProperties = DialogProperties(),
     onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+    properties: DialogProperties = DialogProperties(),
     onContentClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -30,7 +31,7 @@ fun AutoResizeDialog(
         properties = properties,
     ) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .clickable(
                     interactionSource = dialogInteractionSource,
