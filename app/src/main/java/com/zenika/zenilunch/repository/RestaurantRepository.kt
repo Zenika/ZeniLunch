@@ -36,6 +36,6 @@ class RestaurantRepository @Inject constructor(
     }
 
     fun clearCache() {
-        cache = emptyList()
+        cache = null
     }
 }

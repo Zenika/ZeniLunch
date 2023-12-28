@@ -1,7 +1,6 @@
 package com.zenika.zenilunch.di
 
 import android.content.Context
-import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.zenika.zenilunch.data.network.RestaurantGitHubApi
 import dagger.Module
@@ -11,6 +10,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -35,11 +36,9 @@ class NetworkModule {
         context: Context
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val request = chain.request()
-                Log.d("Network", "URL: ${request.url}")
-                chain.proceed(request)
-            }
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(Level.BODY)
+            })
             .cache(Cache(context.cacheDir, maxSize = 5_000_000))
             .build()
     }
